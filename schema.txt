@@ -1,0 +1,96 @@
+Table Users {
+  id integer [PK, increment]
+  firstName varchar
+  lastName varchar
+  email email
+  username varchar
+  password varchar
+}
+
+Table Groups {
+  id integer [PK, increment]
+  organizerId integer
+  name varchar
+  about varchar
+  type varchar
+  private boolean
+  city varchar
+  state varchar
+  createdAt datetime
+  updatedAt datetime
+  previewImage varchar
+}
+Ref: Groups.organizerId - Organizers.id
+
+Table Images {
+  id integer [PK, increment]
+  url varchar
+  preview boolean
+}
+
+Table GroupImages {
+  id integer [PK, increment]
+  imageId integer
+  groupId integer
+}
+Ref: GroupImages.imageId - Images.id
+Ref: GroupImages.groupId - Groups.id
+
+Table Organizers {
+  id integer [PK, increment]
+  firstName varchar
+  lastName varchar
+}
+
+Table Venues {
+  id integer [PK, increment]
+  groupId integer
+  address varchar
+  city varchar
+  state varchar
+  lat numeric
+  lng numeric
+}
+Ref: Venues.groupId - Groups.id
+
+Table Events {
+  id integer [PK, increment]
+  groupId integer
+  venueId integer
+  name varchar
+  type varchar
+  capacity integer
+  price numeric
+  startDate datetime
+  endDate datetime
+  numAttending integer
+  previewImage url
+}
+Ref: Events.groupId - Groups.id
+Ref: Events.venueId - Venues.id
+
+Table EventImages {
+  id integer [PK, increment]
+  eventId integer
+  imageId integer
+}
+Ref: EventImages.eventId - Events.id
+Ref: EventImages.imageId - Images.id
+
+Table Members {
+  id integer [PK, increment]
+  memberId integer
+  groupId integer
+  status varchar
+}
+Ref: Members.memberId - Users.id
+Ref: Members.groupId - Groups.id
+
+Table Attendees {
+  id integer [PK, increment]
+  userId integer
+  eventId integer
+  status varchar
+}
+Ref: Attendees.userId - Users.id
+Ref: Attendees.eventId - Events.id
