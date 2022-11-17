@@ -35,4 +35,3 @@ router.delete("/", (_req, res) => {
 
 module.exports = router;
 
-// TgTjacdf-7ffwd0tkf1TsxDFsTZ_XDs76JAM
