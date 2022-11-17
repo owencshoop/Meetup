@@ -54,9 +54,8 @@ router.get("/", restoreUser, (req, res) => {
     return res.json({
       user: user.toSafeObject(),
     });
-  } else return res.json({});
+  } else return res.json({user});
 });
 
 module.exports = router;
 
-//"Y4GDlHpY-70F4hkFHoLVNAQMBQbxUvksxFz8"
