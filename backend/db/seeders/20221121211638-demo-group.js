@@ -16,7 +16,7 @@ module.exports = {
         {
           organizerId: 1,
           name: "Demos Group",
-          about: "We demolish eveything",
+          about: "We demolish eveything. And we add extra text to ensure our about is more than 50 characters",
           type: "In person",
           private: false,
           city: "New York",
@@ -25,7 +25,7 @@ module.exports = {
         {
           organizerId: 2,
           name: "Owens Group",
-          about: "We build backend APIs",
+          about: "We build backend APIs. And we add extra text to ensure our about is more than 50 characters",
           type: "In person",
           private: true,
           city: "Dewey Beach",
@@ -34,7 +34,7 @@ module.exports = {
         {
           organizerId: 3,
           name: "Chandlers Group",
-          about: "We discuss and review our health specs",
+          about: "We discuss and review our health specs.  And we add extra text to ensure our about is more than 50 characters",
           type: "In person",
           private: true,
           city: "Los Angeles",
@@ -42,7 +42,7 @@ module.exports = {
         }, {
           organizerId: 4,
           name: "Conners Group",
-          about: "We play video games",
+          about: "We play video games.  And we add extra text to ensure our about is more than 50 characters",
           type: "Online",
           private: false,
           city: "Boulder",
