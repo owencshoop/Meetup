@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Group.belongsTo(models.User, {foreignKey: 'organizerId'})
+      Group.belongsToMany(models.User, {
+        through: 'Membership',
+        foreignKey: 'groupId',
+        otherKey: 'userId'
+      })
     }
   }
   Group.init({
@@ -20,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     about: {
       type: DataTypes.TEXT,
