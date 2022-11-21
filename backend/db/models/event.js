@@ -31,7 +31,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [5]
+      }
     },
     description: {
       type: DataTypes.TEXT,
@@ -51,11 +54,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     startDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isAfter: '2022-11-18'
+      }
     },
     endDate: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        isAfter: this.startDate
+      }
     }
   }, {
     sequelize,
