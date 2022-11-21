@@ -3,34 +3,31 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Group extends Model {
+  class Event extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Group.belongsTo(models.User, {foreignKey: 'organizerId'})
-      Group.belongsToMany(models.User, {
-        through: 'Membership',
-        foreignKey: 'groupId',
-        otherKey: 'userId'
-      })
-      Group.hasMany(models.Venue, {foreignKey: 'groupId'})
-      Group.hasMany(models.Event, {foreignKey: 'groupId', onDelete: 'cascade'})
+      Event.belongsTo(models.Venue, {foreignKey: 'venueId'})
+      Event.belongsTo(models.Group, {foreignKey: 'groupId'})
     }
   }
-  Group.init({
-    organizerId: {
+  Event.init({
+    venueId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
+    },
+    groupId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+      allowNull: false
     },
-    about: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false
     },
@@ -38,21 +35,25 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('Online', 'In person'),
       allowNull: false
     },
-    private: {
-      type: DataTypes.BOOLEAN,
+    capacity: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    city: {
-      type: DataTypes.STRING,
+    price: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    state: {
-      type: DataTypes.STRING,
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    endDate: {
+      type: DataTypes.DATE,
       allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Group',
+    modelName: 'Event',
   });
-  return Group;
+  return Event;
 };
