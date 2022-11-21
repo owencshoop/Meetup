@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'groupId',
         otherKey: 'userId'
       })
-      Group.hasMany(models.Venue, {foreignKey: 'groupId'})
+      Group.hasMany(models.Venue, {foreignKey: 'groupId', onDelete: 'cascade'})
       Group.hasMany(models.Event, {foreignKey: 'groupId', onDelete: 'cascade'})
+      Group.hasMany(models.GroupImage, {foreignKey: 'groupId', onDelete: 'cascade'})
     }
   }
   Group.init({
