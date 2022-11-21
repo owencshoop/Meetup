@@ -20,7 +20,7 @@ module.exports = {
           type: "In person",
           private: false,
           city: "New York",
-          state: "New York",
+          state: "NY",
         },
         {
           organizerId: 2,
@@ -29,7 +29,7 @@ module.exports = {
           type: "In person",
           private: true,
           city: "Dewey Beach",
-          state: "Delaware",
+          state: "DE",
         },
         {
           organizerId: 3,
@@ -38,7 +38,7 @@ module.exports = {
           type: "In person",
           private: true,
           city: "Los Angeles",
-          state: "California",
+          state: "CA",
         }, {
           organizerId: 4,
           name: "Conners Group",
@@ -46,7 +46,7 @@ module.exports = {
           type: "Online",
           private: false,
           city: "Boulder",
-          state: "Colorado",
+          state: "CO",
         },
       ],
       {}

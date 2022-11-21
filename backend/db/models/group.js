@@ -55,7 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     state: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [2, 2]
+      }
     }
   }, {
     sequelize,
