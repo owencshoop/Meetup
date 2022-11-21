@@ -46,7 +46,17 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      // define association here
+      User.hasMany(models.Group, {foreignKey: 'organizerId', onDelete: 'CASCADE'})
+      User.belongsToMany(models.Group, {
+        through: 'Membership',
+        foreignKey: 'userId',
+        otherKey: 'groupId'
+      })
+      User.belongsToMany(models.Event, {
+        through: 'Attendance',
+        foreignKey: 'userId',
+        otherKey: 'eventId'
+      })
     }
   }
 
@@ -55,6 +65,7 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           len: [4, 30],
           isNotEmail(value) {
@@ -73,6 +84,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           len: [3, 256],
           isEmail: true,
