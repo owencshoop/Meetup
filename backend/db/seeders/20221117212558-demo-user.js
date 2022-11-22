@@ -34,10 +34,10 @@ module.exports = {
         username: 'chandler',
         hashedPassword: bcrypt.hashSync('password3')
       }, {
-        email: 'conner1@user.io',
+        email: 'conner@user.io',
         firstName: 'Conner',
         lastName: 'Shoop',
-        username: 'conner1',
+        username: 'conner',
         hashedPassword: bcrypt.hashSync('password4')
       }
     ], {});
