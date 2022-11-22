@@ -287,4 +287,110 @@ router.put('/:groupId', requireAuth, validateCreateGroup, async (req, res, next)
     res.json(group)
 })
 
+const createVenueValidator = [
+    check('address')
+        .exists({checkFalsy: true})
+        .withMessage('Street address is required'),
+    check('city')
+        .exists({checkFalsy: true})
+        .withMessage('City is required'),
+    check('state')
+        .exists({checkFalsy: true})
+        .withMessage('State is required'),
+    check('lat')
+        .exists({checkFalsy: true})
+        .withMessage('Latitude is not valid'),
+    check('lng')
+        .exists({checkFalsy: true})
+        .withMessage('Longitude is not valid')
+]
+
+// CREATE A NEW VENUE FOR A GROUP BY ID
+router.post('/:groupId/venues', requireAuth, createVenueValidator, async (req, res, next) => {
+    const { address, city, state, lat, lng} = req.body
+
+    const groupId = req.params.groupId
+    let {user} = req
+    user = user.toJSON()
+
+    let group = await Group.findOne({
+        where: {
+                id: groupId,
+        }
+    })
+
+    let groupCoHost = await Membership.findOne({
+        where: {
+            [Op.and]: [
+                {userId: user.id},
+                {groupId: groupId},
+                {status: 'co-host'}
+            ]
+        }
+    })
+    if (group) group = group.toJSON()
+
+    if (!group || (!groupCoHost && group.organizerId !== parseInt(user.id))){
+        const err = new Error("Group couldn't be found")
+        err.status = 404
+
+        next(err)
+    }
+
+    let newVenue = await Venue.create({
+        groupId,
+        address,
+        city,
+        state,
+        lat,
+        lng
+    })
+    newVenue = newVenue.toJSON()
+
+    const venue = await Venue.findByPk(newVenue.id, {
+        attributes: ['id', 'groupId', 'address', 'city', 'state', 'lat', 'lng']
+    })
+
+    res.json(venue)
+})
+
+// GET ALL VENUES FOR A GROUPID /api/groups/:groupId/venues
+router.get('/:groupId/venues', requireAuth, async (req, res, next) => {
+    const groupId = req.params.groupId
+    let {user} = req
+    user = user.toJSON()
+
+    let group = await Group.findOne({
+        where: {
+                id: groupId,
+        }
+    })
+
+    let groupCoHost = await Membership.findOne({
+        where: {
+            [Op.and]: [
+                {userId: user.id},
+                {groupId: groupId},
+                {status: 'co-host'}
+            ]
+        }
+    })
+    if (group) group = group.toJSON()
+
+    if (!group || (!groupCoHost && group.organizerId !== parseInt(user.id))){
+        const err = new Error("Group couldn't be found")
+        err.status = 404
+
+        next(err)
+    }
+
+    const venues = await Venue.findAll({
+        where: {
+            groupId
+        }
+    })
+
+    res.json({Venues: venues})
+})
+
 module.exports = router;
