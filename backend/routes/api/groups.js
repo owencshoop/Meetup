@@ -150,15 +150,12 @@ router.get("/", async (req, res, next) => {
       attributes: ["url"],
       raw: true,
     });
-    // console.log(previewImage)
 
     if (previewImage) group.previewImage = previewImage.url;
 
     groupsArr.push(group);
-    // console.log(groupsArr)
   }
 
-  // console.log(groupsArr)
   return res.json({ Groups: groupsArr });
 });
 
@@ -198,7 +195,7 @@ router.post("/", requireAuth, validateCreateGroup, async (req, res, next) => {
   });
 
   if (foundGroup) {
-    const err = new Error("Group with that name already exsists");
+    const err = new Error("Group with that name already exists");
     err.status = 403;
 
     next(err);
