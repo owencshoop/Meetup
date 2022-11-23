@@ -97,11 +97,13 @@ router.post(
       next(err);
     }
 
-    const eventImage = await EventImage.create({
+    let eventImage = await EventImage.create({
       eventId,
       url,
       preview,
     });
+    eventImage = eventImage.toJSON()
+    eventImage = await EventImage.findByPk(eventImage.id)
 
     res.json(eventImage);
   }

@@ -616,9 +616,9 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
         groupId,
         status: 'pending'
     })
-    // membership = membership.toJSON()
+    membership = membership.toJSON()
 
-    // membership = await Membership.findByPk(membership.id)
+    membership = await Membership.findByPk(membership.id)
 
     res.json(membership)
 })
