@@ -23,9 +23,15 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM('attending', 'host', 'co-host', 'pending', 'waitlist'),
+      type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'pending'
+      defaultValue: 'pending',
+      validate: {
+        isIn: {
+          args: [['attending', 'host', 'co-host', 'pending', 'waitlist']],
+          msg: "status must be 'attending', 'host', 'co-host', 'pending', or 'waitlist'"
+        }
+      }
     }
   }, {
     sequelize,
