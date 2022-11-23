@@ -19,6 +19,7 @@ const { Op } = require("sequelize");
 const { requireAuth } = require("../../utils/auth");
 const venue = require("../../db/models/venue");
 const app = require("../../app");
+const group = require("../../db/models/group");
 
 const router = express.Router();
 
@@ -104,6 +105,52 @@ router.post('/:eventId/images', requireAuth, addImageValidator, async (req, res,
     res.json(eventImage)
 })
 
+// GET ALL EVENTS /api/events/
+router.get('/', async (req, res, next) => {
+    let events = await Event.findAll({
+        include: [{
+            model: Group,
+            attributes: ['id', 'name', 'city', 'state']
+        }, {
+            model: Venue,
+            attributes: ['id', 'city', 'state']
+        }],
+        attributes: {
+            exclude: ['description', 'price', 'capacity']
+        },
+    })
+
+    const Events = []
+
+    for (let event of events){
+        event = event.toJSON()
+
+        let numAttending = await Attendance.count({
+            where: {
+                eventId: event.id
+            },
+            raw: true
+        })
+        console.log(numAttending)
+        event.numAttending = numAttending
+
+        let previewImage = await EventImage.findOne({
+            where: {
+                eventId: event.id,
+                preview: true
+            },
+            attributes: ['url'],
+            raw: true
+        })
+        if (previewImage) event.previewImage = previewImage.url
+
+        Events.push(event)
+    }
+
+    res.json({Events})
+})
+
+//
 
 
 
