@@ -7,6 +7,7 @@ const {
   Membership,
   Venue,
   Event,
+  Attendance,
   sequelize,
 } = require("../../db/models");
 
@@ -150,7 +151,7 @@ router.get("/", async (req, res, next) => {
     });
     // console.log(previewImage)
 
-    group.previewImage = previewImage.url;
+    if (previewImage) group.previewImage = previewImage.url;
 
     groupsArr.push(group);
     // console.log(groupsArr)
@@ -215,8 +216,19 @@ router.post("/", requireAuth, validateCreateGroup, async (req, res, next) => {
   res.json(newGroup);
 });
 
+const addImageValidator = [
+    check('url')
+        .exists({checkFalsy: true})
+        .isURL()
+        .withMessage('URL must be a URL'),
+    check('preview')
+        .exists({checkFalsy: true})
+        .isBoolean()
+        .withMessage('Preview must be true or false')
+]
+
 // ADD AN IMAGE TO GROUP FROM GROUPID /api/groups/:groupId/images
-router.post("/:groupId/images", requireAuth, async (req, res, next) => {
+router.post("/:groupId/images", requireAuth, addImageValidator, async (req, res, next) => {
   const groupId = req.params.groupId;
   let { user } = req;
   user = user.toJSON();
@@ -421,6 +433,10 @@ const createEventValidator = [
     .exists({ checkFalsy: true })
     .isAfter()
     .withMessage("Start date must be in the future"),
+  check("endDate")
+    .exists({ checkFalsy: true })
+    .custom((value, { req }) => value > req.body.startDate)
+    .withMessage("End date is less than start date"),
   handleValidationErrors,
 ];
 
@@ -428,7 +444,7 @@ const createEventValidator = [
 router.post(
   "/:groupId/events",
   requireAuth,
-    createEventValidator,
+  createEventValidator,
   async (req, res, next) => {
     const {
       venueId,
@@ -444,7 +460,6 @@ router.post(
     const groupId = req.params.groupId;
     let { user } = req;
     user = user.toJSON();
-
 
     let group = await Group.findOne({
       where: {
@@ -462,13 +477,16 @@ router.post(
       },
     });
     if (group) group = group.toJSON();
+    let venue
+    if (venueId){
+        venue = await Venue.findByPk(venueId);
+        if (!venue) {
+          const err = new Error("Venue does not exist");
+          err.status = 403;
 
-    const venue = await Venue.findByPk(venueId)
-    if (!venue){
-        const err = new Error('Venue does not exist')
-        err.status = 403
-
-        next(err)
+          next(err);
+          return
+        }
     }
 
     if (!group || (!groupCoHost && group.organizerId !== parseInt(user.id))) {
@@ -477,10 +495,9 @@ router.post(
 
       next(err);
     }
-    console.log(endDate, "-------------------------");
     let event = await Event.create({
       groupId: groupId,
-      venueId: venueId,
+      venueId: venueId || null,
       name: name,
       type: type,
       capacity: capacity,
@@ -493,8 +510,16 @@ router.post(
     delete event.createdAt;
     delete event.updatedAt;
 
+    let attendance = await Attendance.create({
+        eventId: event.id,
+        userId: user.id,
+        status: 'host'
+    })
+
     res.json(event);
   }
 );
+
+
 
 module.exports = router;
