@@ -42,8 +42,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     type: {
-      type: DataTypes.ENUM('Online', 'In person'),
-      allowNull: false
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: {
+          args: [['Online', 'In person']],
+          msg: "Type must be 'Online' or 'In person'"
+        }
+      }
     },
     capacity: {
       type: DataTypes.INTEGER,
