@@ -63,6 +63,7 @@ const addImageValidator = [
     .exists({ checkFalsy: true })
     .isBoolean()
     .withMessage("Preview must be true or false"),
+  handleValidationErrors,
 ];
 
 // Add an image to an event based on the eventId /api/events/:eventId/images
@@ -124,14 +125,14 @@ router.get("/:eventId", async (req, res, next) => {
       },
     ],
   });
-  if (!event){
-    const err = new Error("Event couldn't be found")
-    err.status = 404
+  if (!event) {
+    const err = new Error("Event couldn't be found");
+    err.status = 404;
 
-    next(err)
+    next(err);
   }
-  event = event.toJSON()
-  console.log(event)
+  event = event.toJSON();
+  console.log(event);
   let numAttending = await Attendance.count({
     where: {
       eventId,
@@ -140,68 +141,89 @@ router.get("/:eventId", async (req, res, next) => {
   });
   event.numAttending = numAttending;
 
-  res.json(event)
+  res.json(event);
 });
 
 // EDIT AN EVENT BY EVENTID /api/events/:eventId
-router.put('/:eventId', requireAuth, createEventValidator, async (req, res, next) => {
-    const { venueId, name, type, capacity, price, description, startDate, endDate} = req.body
-    const eventId = req.params.eventId
+router.put(
+  "/:eventId",
+  requireAuth,
+  createEventValidator,
+  async (req, res, next) => {
+    const {
+      venueId,
+      name,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate,
+    } = req.body;
+    const eventId = req.params.eventId;
 
-    const venue = await Venue.findByPk(venueId)
-    if (!venue){
-        const err = new Error("Venue couldn't be found")
-        err.status = 404
+    const venue = await Venue.findByPk(venueId);
+    if (!venue) {
+      const err = new Error("Venue couldn't be found");
+      err.status = 404;
 
-        next(err)
+      next(err);
     }
 
-    let {user} = req
-    user = user.toJSON()
+    let { user } = req;
+    user = user.toJSON();
 
-    let event = await Event.findByPk(eventId)
-    if (!event){
-        const err = new Error("Event couldn't be found")
-        err.status = 404
+    let event = await Event.findByPk(eventId);
+    if (!event) {
+      const err = new Error("Event couldn't be found");
+      err.status = 404;
 
-        next(err)
-      }
+      next(err);
+    }
 
-    let jsonEvent = event.toJSON()
-    const groupId = jsonEvent.groupId
+    let jsonEvent = event.toJSON();
+    const groupId = jsonEvent.groupId;
 
     let group = await Group.findOne({
-        where: {
-          id: groupId,
-        },
-      });
+      where: {
+        id: groupId,
+      },
+    });
 
-      let groupCoHost = await Membership.findOne({
-        where: {
-          [Op.and]: [
-            { userId: user.id },
-            { groupId: groupId },
-            { status: "co-host" },
-          ],
-        },
-      });
-      if (group) group = group.toJSON();
+    let groupCoHost = await Membership.findOne({
+      where: {
+        [Op.and]: [
+          { userId: user.id },
+          { groupId: groupId },
+          { status: "co-host" },
+        ],
+      },
+    });
+    if (group) group = group.toJSON();
 
-      if (!group || (!groupCoHost && group.organizerId !== parseInt(user.id))) {
-        const err = new Error("Group couldn't be found");
-        err.status = 404;
+    if (!group || (!groupCoHost && group.organizerId !== parseInt(user.id))) {
+      const err = new Error("Group couldn't be found");
+      err.status = 404;
 
-        next(err);
-      }
+      next(err);
+    }
 
-      event = await event.update({
-        venueId, name, type, capacity, price, description, startDate, endDate
-      })
-      event = event.toJSON()
-      delete event.updatedAt
+    event = await event.update({
+      venueId,
+      name,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate,
+    });
+    event = event.toJSON();
+    delete event.updatedAt;
 
-      res.json(event)
-})
+    res.json(event);
+  }
+);
 
 // GET ALL EVENTS /api/events/
 router.get("/", async (req, res, next) => {

@@ -12,25 +12,21 @@ module.exports = {
     options.tableName = 'EventImages'
     return queryInterface.bulkInsert(options, [
       {
-        id: 1,
         eventId: 1,
         url: 'event1sampleurl.com',
         preview: true
       },
       {
-        id: 2,
         eventId: 2,
         url: 'event2sampleurl.com',
         preview: true
       },
       {
-        id: 3,
         eventId: 3,
         url: 'event3sampleurl.com',
         preview: true
       },
       {
-        id: 4,
         eventId: 4,
         url: 'event4sampleurl.com',
         preview: true
