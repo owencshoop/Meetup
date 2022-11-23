@@ -66,12 +66,10 @@ router.get("/current", requireAuth, async (req, res, next) => {
       attributes: ["url"],
       raw: true,
     });
-    // console.log(previewImage)
 
-    group.previewImage = previewImage.url;
+    if (previewImage) group.previewImage = previewImage.url;
 
     groupsArr.push(group);
-    // console.log(groupsArr)
   }
 
   res.json(groupsArr);
@@ -249,9 +247,9 @@ router.post("/:groupId/images", requireAuth, addImageValidator, async (req, res,
   const { url, preview } = req.body;
 
   let newImage = await GroupImage.create({
-    groupId,
-    url,
-    preview,
+    groupId: groupId,
+    url: url,
+    preview: preview,
   });
   newImage = newImage.toJSON();
 
