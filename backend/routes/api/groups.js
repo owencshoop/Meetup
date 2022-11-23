@@ -619,8 +619,53 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
     console.log(membership)
 
     membership = await Membership.findByPk(membership.id)
+    membership = membership.toJSON()
+    delete membership.id
+    delete membership.groupId
 
     res.json(membership)
+})
+
+// CHANGE STATUS OF MEMBERSHIP BY groupId /api/groups/:groupId/membership
+router.put('/:groupId/membership', requireAuth, async (req, res, next) => {
+    const {userId, status} = req.body
+
+    let {user} = req
+    user = user.toJSON()
+
+    const groupId = req.params.groupId
+
+    const foundUser = await User.findByPk(userId)
+    if (!foundUser){
+        const err = new Error("Validation Error")
+        err.status = 400
+        err.errors = {'memberId': "User couldn't be found"}
+
+        next(err)
+    }
+
+    const group = await Group.findByPk(groupId)
+    if (!group){
+        const err = new Error("Group couldn't be found")
+        err.status = 404
+
+        next(err)
+    }
+
+    const membership = await Membership.findOne({
+        where: {
+            userId: user.id,
+            groupId
+        }
+    })
+    if (!membership){
+        const err = new Error('Membership between the user and the group does not exist')
+        err.status = 404
+
+        next(err)
+    }
+
+
 })
 
 module.exports = router;
