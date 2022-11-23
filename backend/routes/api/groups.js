@@ -596,7 +596,6 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
         },
         raw: true
     })
-    console.log(pendingMembership)
     if (pendingMembership){
         if (pendingMembership.status === 'pending'){
             const err = new Error('Membership has already been requested')
@@ -617,6 +616,7 @@ router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
         status: 'pending'
     })
     membership = membership.toJSON()
+    console.log(membership)
 
     membership = await Membership.findByPk(membership.id)
 
