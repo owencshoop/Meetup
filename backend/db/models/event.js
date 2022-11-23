@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   Event.init({
     venueId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true,
+      defaultValue: null
     },
     groupId: {
       type: DataTypes.INTEGER,
@@ -49,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     price: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: false
     },
     startDate: {
@@ -63,12 +64,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
       validate: {
-        isAfter: this.startDate
+        isAfter(value){
+          return value > this.startDate
+        }
       }
     }
   }, {
     sequelize,
     modelName: 'Event',
+    defaultScope: {
+      attributes: {
+        exclude: ['updatedAt', 'createdAt']
+      }
+    }
   });
   return Event;
 };
