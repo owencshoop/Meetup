@@ -72,7 +72,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     groupsArr.push(group);
   }
 
-  res.json(groupsArr);
+  res.json({Groups: groupsArr});
 });
 
 // GET GROUP DETAILS FROM GROUPID /api/groups/:id
@@ -516,6 +516,7 @@ router.post(
   }
 );
 
+// GET ALL EVENTS BY GROUPID /api/groups/:groupId/events
 router.get('/:groupId/events', async (req, res, next) => {
     const groupId = req.params.groupId
 
@@ -573,5 +574,52 @@ router.get('/:groupId/events', async (req, res, next) => {
 })
 
 
+// REQUEST MEMBERSHIP FOR A GROUP from GroupId /api/groups/:groupId/membership
+router.post('/:groupId/membership', requireAuth, async (req, res, next) => {
+    const groupId = req.params.groupId
+
+    let {user} = req
+    user = user.toJSON()
+
+    const group = await Group.findByPk(groupId)
+    if (!group){
+        const err = new Error("Group couldn't be found")
+        err.status = 404
+
+        next(err)
+    }
+
+    const pendingMembership = await Membership.findOne({
+        where: {
+            groupId,
+            userId: user.id
+        },
+        raw: true
+    })
+    if (pendingMembership){
+        if (pendingMembership.status === 'pending'){
+            const err = new Error('Membership has already been requested')
+            err.status = 400
+
+            next(err)
+        } else {
+            const err = new Error('User is already a member of the group')
+            err.status = 400
+
+            next(err)
+        }
+    }
+
+    let membership = await Membership.create({
+        userId: user.id,
+        groupId,
+        status: 'pending'
+    })
+    membership = membership.toJSON()
+
+    membership = await Membership.findByPk(membership.id)
+
+    res.json(membership)
+})
 
 module.exports = router;
