@@ -439,7 +439,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
   }
 
   let updatedAttendance = await pendingAttendance.update({ status });
-  updatedAttendance.toJSON();
+  updatedAttendance = updatedAttendance.toJSON();
   delete updatedAttendance.updatedAt;
 
   res.json(updatedAttendance);
