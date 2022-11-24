@@ -58,6 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'eventId'
       })
       User.hasMany(models.Membership, {foreignKey: 'userId', onDelete: 'cascade'})
+      User.hasMany(models.Attendance, {foreignKey: 'userId', onDelete: 'cascade'})
     }
   }
 
