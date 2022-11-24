@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         otherKey: 'userId'
       })
       Event.hasMany(models.EventImage, {foreignKey: 'eventId', onDelete: 'cascade'})
+      Event.hasMany(models.Attendance, {foreignKey: 'eventId', onDelete: 'cascade'})
     }
   }
   Event.init({

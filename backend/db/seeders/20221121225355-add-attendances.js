@@ -14,22 +14,22 @@ module.exports = {
       {
         eventId: 1,
         userId: 1,
-        status: 'member',
+        status: 'host',
       },
       {
         eventId: 2,
         userId: 2,
-        status: 'member',
+        status: 'host',
       },
       {
         eventId: 3,
         userId: 3,
-        status: 'member',
+        status: 'host',
       },
       {
         eventId: 4,
         userId: 4,
-        status: 'member',
+        status: 'host',
       },
     ]);
   },

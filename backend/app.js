@@ -5,7 +5,7 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const { ValidationError } = require('sequelize');
+const { ValidationError } = require("sequelize");
 
 // checks if the environment is in productions
 const { environment } = require("./config");
@@ -59,10 +59,11 @@ app.use((_req, _res, next) => {
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
   // check if error is a Sequelize error:
-  console.log(err)
+  console.log(err);
   if (err instanceof ValidationError) {
     err.errors = err.errors.map((e) => e.message);
-    err.title = 'Validation error';
+    err.status = 400;
+    err.title = "Validation error";
   }
   next(err);
 });
@@ -75,7 +76,7 @@ app.use((err, _req, res, _next) => {
     message: err.message,
     statusCode: err.status || 500,
     errors: err.errors,
-    stack: isProduction ? null : err.stack
+    stack: isProduction ? null : err.stack,
   });
 });
 

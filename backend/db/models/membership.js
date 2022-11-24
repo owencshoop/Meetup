@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Membership',
     defaultScope: {
       attributes: {
-        exclude: ['id', 'groupId', 'createdAt', 'updatedAt']
+        exclude: ['createdAt', 'updatedAt']
       }
     }
   });
