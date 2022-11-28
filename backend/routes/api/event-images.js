@@ -31,14 +31,14 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const eventImage = await EventImage.findByPk(imageId, {
         include: {model: Event}
     })
-    const jsonEventImage = eventImage.toJSON()
     if (!eventImage) {
-        const err = new Error("Event Image couldn't be found")
-        err.status = 404
+      const err = new Error("Event Image couldn't be found")
+      err.status = 404
 
-        return next(err)
+      return next(err)
     }
-    console.log(jsonEventImage)
+    const jsonEventImage = eventImage.toJSON()
+
     const event = await Event.findByPk(jsonEventImage.Event.id)
     if (!event){
         const err = new Error("Event couldn't be found")
