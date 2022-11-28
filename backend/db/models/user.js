@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static associate(models) {
-      User.hasMany(models.Group, {foreignKey: 'organizerId', onDelete: 'CASCADE'})
+      User.hasMany(models.Group, {foreignKey: 'organizerId', onDelete: 'cascade', hooks: true})
       User.belongsToMany(models.Group, {
         through: 'Membership',
         foreignKey: 'userId',
@@ -57,8 +57,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         otherKey: 'eventId'
       })
-      User.hasMany(models.Membership, {foreignKey: 'userId', onDelete: 'cascade'})
-      User.hasMany(models.Attendance, {foreignKey: 'userId', onDelete: 'cascade'})
+      User.hasMany(models.Membership, {foreignKey: 'userId', onDelete: 'cascade', hooks: true})
+      User.hasMany(models.Attendance, {foreignKey: 'userId', onDelete: 'cascade', hooks: true})
     }
   }
 

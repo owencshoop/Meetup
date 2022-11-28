@@ -59,7 +59,7 @@ router.put('/:venueId', requireAuth, createVenueValidator, async (req, res, next
                 ]
             }
         })
-        
+
         group = await Group.findByPk(groupId)
         if (group) group = group.toJSON()
     }
@@ -69,7 +69,7 @@ router.put('/:venueId', requireAuth, createVenueValidator, async (req, res, next
         const err = new Error("Group couldn't be found")
         err.status = 404
 
-        next(err)
+        return next(err)
     }
 
     venue = await venue.update({
