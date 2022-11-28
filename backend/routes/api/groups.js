@@ -637,6 +637,14 @@ router.put("/:groupId/membership", requireAuth, async (req, res, next) => {
 
   const groupId = req.params.groupId;
 
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    const err = new Error("Group couldn't be found");
+    err.status = 404;
+
+    return next(err);
+  }
+
   const foundUser = await User.findByPk(userId);
   if (!foundUser) {
     const err = new Error("Validation Error");
@@ -646,13 +654,6 @@ router.put("/:groupId/membership", requireAuth, async (req, res, next) => {
     return next(err);
   }
 
-  const group = await Group.findByPk(groupId);
-  if (!group) {
-    const err = new Error("Group couldn't be found");
-    err.status = 404;
-
-    return next(err);
-  }
 
   let membership = await Membership.findOne({
     where: {
