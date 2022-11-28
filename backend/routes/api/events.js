@@ -244,10 +244,18 @@ router.get("/", async (req, res, next) => {
   let where = {}
 
   if (name) where.name = {[Op.substring]: name}
-  if (type === 'Online' || type === 'In person') where.type = type
+  if (type){
+    if (type === 'Online' || type === 'In person'){
+      where.type = type
+    } else {
+      const err = new Error("Type must 'Online' or 'In person'")
+      err.status = 400
+
+      return next(err)
+    }
+  }
   if (startDate > Date.now()) where.startDate = {[Op.gte]: startDate}
 
-  console.log(pagination)
   let events = await Event.findAll({
     include: [
       {
