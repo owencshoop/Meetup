@@ -193,7 +193,7 @@ router.post("/", requireAuth, validateCreateGroup, async (req, res, next) => {
     const err = new Error("Group with that name already exists");
     err.status = 403;
 
-    next(err);
+    return next(err);
   }
 
   const newGroup = await Group.create({
@@ -241,7 +241,7 @@ router.post(
       const err = new Error("Group couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     const { url, preview } = req.body;
@@ -283,7 +283,7 @@ router.put(
       const err = new Error("Group couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     group = await group.update({
@@ -346,7 +346,7 @@ router.post(
       const err = new Error("Group couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     let newVenue = await Venue.create({
@@ -394,7 +394,7 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
     const err = new Error("Group couldn't be found");
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
 
   const venues = await Venue.findAll({
@@ -490,7 +490,7 @@ router.post(
       const err = new Error("Group couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
     let event = await Event.create({
       groupId: groupId,
@@ -527,7 +527,7 @@ router.get("/:groupId/events", async (req, res, next) => {
     const err = new Error("Group couldn't be found");
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
   let events = await Event.findAll({
     where: {
@@ -589,7 +589,7 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
     const err = new Error("Group couldn't be found");
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
 
   const pendingMembership = await Membership.findOne({
@@ -604,12 +604,12 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
       const err = new Error("Membership has already been requested");
       err.status = 400;
 
-      next(err);
+      return next(err);
     } else {
       const err = new Error("User is already a member of the group");
       err.status = 400;
 
-      next(err);
+      return next(err);
     }
   }
 
@@ -727,7 +727,7 @@ router.get("/:groupId/members", async (req, res, next) => {
     const err = new Error("Group couldn't be found")
     err.status = 404
 
-    next(err)
+    return next(err)
   }
 
   let organizerCoHost = false;
@@ -790,8 +790,6 @@ router.get("/:groupId/members", async (req, res, next) => {
         },
         raw: true
     })
-    console.log(membership)
-    console.log(member)
     const status = membership.status
     member.Membership = {status}
 

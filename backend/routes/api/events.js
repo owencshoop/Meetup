@@ -94,7 +94,7 @@ router.post(
       const err = new Error("Event couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     let eventImage = await EventImage.create({
@@ -131,7 +131,7 @@ router.get("/:eventId", async (req, res, next) => {
     const err = new Error("Event couldn't be found");
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
   event = event.toJSON();
   console.log(event);
@@ -169,7 +169,7 @@ router.put(
       const err = new Error("Venue couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     let { user } = req;
@@ -180,7 +180,7 @@ router.put(
       const err = new Error("Event couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     let jsonEvent = event.toJSON();
@@ -207,7 +207,7 @@ router.put(
       const err = new Error("Group couldn't be found");
       err.status = 404;
 
-      next(err);
+      return next(err);
     }
 
     event = await event.update({
@@ -287,7 +287,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
     const err = new Error("Event couldn't be found");
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
   let jsonEvent = event.toJSON();
   const groupId = jsonEvent.groupId;
@@ -319,7 +319,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
     );
     err.status = 403;
 
-    next(err);
+    return next(err);
   }
 
   const pendingAttendance = await Attendance.findOne({
@@ -380,7 +380,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
     const err = new Error("Event couldn't be found");
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
   let jsonEvent = event.toJSON();
   const groupId = jsonEvent.groupId;
@@ -412,7 +412,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
     );
     err.status = 403;
 
-    next(err);
+    return next(err);
   }
 
   let pendingAttendance = await Attendance.findOne({
@@ -428,14 +428,14 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
     );
     err.status = 404;
 
-    next(err);
+    return next(err);
   }
 
   if (status === "pending") {
     const err = new Error("Cannot change an attendance status to pending");
     err.status = 400;
 
-    next(err);
+    return next(err);
   }
 
   let updatedAttendance = await pendingAttendance.update({ status });
@@ -457,7 +457,7 @@ router.get('/:eventId/attendees', async (req, res, next) => {
     const err = new Error("Event couldn't be found")
     err.status = 404
 
-    next(err)
+    return next(err)
   }
   const groupId = event.groupId
 
@@ -466,7 +466,7 @@ router.get('/:eventId/attendees', async (req, res, next) => {
     const err = new Error("Group couldn't be found")
     err.status = 404
 
-    next(err)
+    return next(err)
   }
 
   let organizerCoHost = false;
@@ -537,5 +537,103 @@ router.get('/:eventId/attendees', async (req, res, next) => {
 
   res.json({ Attendees });
 });
+
+router.delete('/:eventId', requireAuth, async (req, res, next) => {
+  const eventId = req.params.eventId
+
+  let {user} = req
+  user = user.toJSON()
+
+  const event = await Event.findByPk(eventId, {raw: true})
+  if (!event) {
+    const err = new Error("Event couldn't be found")
+    err.status = 404
+
+    return next(err)
+  }
+  const groupId = event.groupId
+
+  const group = await Group.findByPk(groupId)
+  if (!group){
+    const err = new Error("Group couldn't be found")
+    err.status = 404
+
+    return next(err)
+  }
+
+  let organizerCoHost = false;
+
+  let organizerGroup = await Group.findOne({
+    where: {
+      id: groupId,
+      organizerId: user.id,
+    },
+  });
+
+
+  if (organizerGroup) {
+    await event.destroy()
+  }
+
+  res.json({message: 'Successfully deleted'})
+})
+
+router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
+  const eventId = req.params.eventId
+
+  const {userId} = req.body
+
+  let {user} = req
+  user = user.toJSON()
+
+  const event = await Event.findByPk(eventId, {raw: true})
+  if (!event) {
+    const err = new Error("Event couldn't be found")
+    err.status = 404
+
+    return next(err)
+  }
+  const groupId = event.groupId
+
+  let group = await Group.findByPk(groupId)
+  group = group.toJSON()
+  if (!group){
+    const err = new Error("Group couldn't be found")
+    err.status = 404
+
+    return next(err)
+  }
+
+  let organizerGroup = await Group.findOne({
+    where: {
+      id: groupId,
+      organizerId: user.id,
+    },
+  });
+
+  const attendance = await Attendance.findOne({
+    where: {
+      userId,
+      eventId
+    }
+  })
+  if (!attendance) {
+    const err = new Error('Attendance does not exist')
+    err.status = 404
+
+    return next(err)
+  }
+
+  if (organizerGroup || user.id == userId){
+    await attendance.destroy()
+  } else {
+    const err = new Error('Only the User or organizer may delete an Attendance')
+    err.status = 403
+
+    return next(err)
+  }
+
+  res.json({'message': 'Successfully deleted attendance from event'})
+})
 
 module.exports = router;
