@@ -254,7 +254,7 @@ router.get("/", async (req, res, next) => {
       return next(err)
     }
   }
-  if (startDate > Date.now()) where.startDate = {[Op.gte]: startDate}
+  if (startDate && Date.parse(startDate) > Date.now()) where.startDate = {[Op.startsWith]: startDate}
 
   let events = await Event.findAll({
     include: [
