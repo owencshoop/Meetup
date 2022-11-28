@@ -538,20 +538,22 @@ router.get('/:eventId/attendees', async (req, res, next) => {
   res.json({ Attendees });
 });
 
+// Delete an event spicified by its id
 router.delete('/:eventId', requireAuth, async (req, res, next) => {
   const eventId = req.params.eventId
 
   let {user} = req
   user = user.toJSON()
 
-  const event = await Event.findByPk(eventId, {raw: true})
+  const event = await Event.findByPk(eventId)
   if (!event) {
     const err = new Error("Event couldn't be found")
     err.status = 404
 
     return next(err)
   }
-  const groupId = event.groupId
+  const jsonEvent = await event.toJSON()
+  const groupId = jsonEvent.groupId
 
   const group = await Group.findByPk(groupId)
   if (!group){
@@ -570,14 +572,31 @@ router.delete('/:eventId', requireAuth, async (req, res, next) => {
     },
   });
 
+  let groupCoHost = await Membership.findOne({
+    where: {
+      [Op.and]: [
+        { userId: user.id },
+        { groupId: groupId },
+        { status: "co-host" },
+      ],
+    },
+  });
 
-  if (organizerGroup) {
+  if (organizerGroup || groupCoHost) organizerCoHost = true;
+
+  if (organizerCoHost) {
     await event.destroy()
+  } else {
+    const err = new Error('Current User must be the organizer or co-host of the group')
+    err.status = 403
+
+    return next(err)
   }
 
   res.json({message: 'Successfully deleted'})
 })
 
+// delete an attendance for an event with userId
 router.delete('/:eventId/attendance', requireAuth, async (req, res, next) => {
   const eventId = req.params.eventId
 

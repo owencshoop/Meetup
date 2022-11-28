@@ -799,6 +799,7 @@ router.get("/:groupId/members", async (req, res, next) => {
   res.json({ Members });
 });
 
+// delete membership for a group with groupId
 router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
   let { user } = req;
   user = user.toJSON();
@@ -853,6 +854,42 @@ router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
   }
 
   res.json({'message': 'Successfully deleted membership from the group'})
+})
+
+// DELETE A GROUP
+router.delete('/:groupId', requireAuth, async (req, res, next) => {
+  let {user} = req
+  user = user.toJSON()
+
+  const groupId = req.params.groupId
+  let group = await Group.findByPk(groupId)
+  if (!group){
+    const err = new Error("Group couldn't be found")
+    err.status = 404
+
+    return next(err)
+  }
+
+  let organizerGroup = await Group.findOne({
+    where: {
+      id: groupId,
+      organizerId: user.id,
+    },
+  });
+
+  if (organizerGroup){
+    await group.destroy()
+  } else {
+    const err = new Error('User must be organizer of the group')
+    err.status = 403
+
+    return next(err)
+  }
+
+  res.json({
+    message: 'Successfully deleted',
+    statusCode: 200
+  })
 })
 
 module.exports = router;
