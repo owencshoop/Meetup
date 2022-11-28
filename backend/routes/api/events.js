@@ -134,7 +134,6 @@ router.get("/:eventId", async (req, res, next) => {
     return next(err);
   }
   event = event.toJSON();
-  console.log(event);
   let numAttending = await Attendance.count({
     where: {
       eventId,
@@ -229,6 +228,26 @@ router.put(
 
 // GET ALL EVENTS /api/events/
 router.get("/", async (req, res, next) => {
+  let {page, size, name, type, startDate} = req.query
+
+  if (!page || parseInt(page) < 1) page = 1
+  if (parseInt(page) > 10) page = 10
+  if (!size || parseInt(size) > 20) size = 20
+  if (parseInt(size) < 1) size = 1
+  page = parseInt(page)
+  size = parseInt(size)
+
+  let pagination = {}
+  pagination.limit = size
+  pagination.offset = size * (page - 1)
+
+  let where = {}
+
+  if (name) where.name = {[Op.substring]: name}
+  if (type === 'Online' || type === 'In person') where.type = type
+  if (startDate > Date.now()) where.startDate = {[Op.gte]: startDate}
+
+  console.log(pagination)
   let events = await Event.findAll({
     include: [
       {
@@ -243,6 +262,8 @@ router.get("/", async (req, res, next) => {
     attributes: {
       exclude: ["description", "price", "capacity"],
     },
+    where,
+    ...pagination
   });
 
   const Events = [];
@@ -256,7 +277,6 @@ router.get("/", async (req, res, next) => {
       },
       raw: true,
     });
-    console.log(numAttending);
     event.numAttending = numAttending;
 
     let previewImage = await EventImage.findOne({
