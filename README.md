@@ -60,11 +60,13 @@ Returns the information about the current user that is logged in.
   * Body:
 
     ```json
-    {
+    {"user": {
       "id": 1,
+      "username": "johnnysmith",
       "firstName": "John",
       "lastName": "Smith",
       "email": "john.smith@gmail.com"
+      }
     }
     ```
 
@@ -95,12 +97,14 @@ information.
   * Body:
 
     ```json
-    {
+    {"user": {
       "id": 1,
+      "username": "johnnysmith",
       "firstName": "John",
       "lastName": "Smith",
       "email": "john.smith@gmail.com",
       "token": ""
+      }
     }
     ```
 
@@ -163,12 +167,14 @@ user's information.
   * Body:
 
     ```json
-    {
+    {"user": {
       "id": 1,
+      "username": "johnnysmith",
       "firstName": "John",
       "lastName": "Smith",
       "email": "john.smith@gmail.com",
       "token": ""
+      }
     }
     ```
 
