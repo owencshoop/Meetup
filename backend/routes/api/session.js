@@ -40,9 +40,9 @@ router.post("/", validateLogin, async (req, res, next) => {
 
   jsonUser.token = ''
 
-  delete jsonUser.username
+  // delete jsonUser.username // ***************
 
-  return res.json(jsonUser);
+  return res.json({user: jsonUser});
 });
 
 // Log out
@@ -52,14 +52,16 @@ router.delete("/", (_req, res) => {
 });
 
 // Get Current User '/api/session'
-router.get("/", requireAuth, (req, res) => {
+router.get("/", (req, res) => {
   let { user } = req;
-  user = user.toJSON()
-  delete user.username
+  if (user){
+    user = user.toJSON()
+    // delete user.username // *****************
+  }
   if (user) {
-    return res.json(user);
+    return res.json({user});
   } else {
-    return res.json(user);
+    return res.json({user});
   }
 });
 
