@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import BodyContainer from "./components/BodyContainer";
+import FooterContainer from "./components/FooterContainer";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -17,6 +18,7 @@ function App() {
     <div className="app-div">
       <Navigation isLoaded={isLoaded} />
       <BodyContainer />
+      <FooterContainer />
       {/* {isLoaded && <Switch></Switch>} */}
     </div>
   );
