@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { deleteGroupThunk } from "../../store/groups";
 
 const EventGroupList = ({ eventgroup }) => {
   const groups = useSelector((state) => Object.values(state.groups.allGroups));
@@ -10,7 +11,7 @@ const EventGroupList = ({ eventgroup }) => {
 
   const handleDelete = (e, groupId) => {
     e.preventDefault()
-    dispatch()
+    dispatch(deleteGroupThunk(groupId))
   }
 
   let content;
