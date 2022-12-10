@@ -1,3 +1,17 @@
 .hidden {
     display: none
 }
+
+.navdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: large;
+}
+
+.profileButton {
+    margin-right: 0px;
+}

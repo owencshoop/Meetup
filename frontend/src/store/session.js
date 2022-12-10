@@ -27,7 +27,7 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
-  return user;
+  return data.user;
 };
 
 export const restoreUser = () => async (dispatch) => {
