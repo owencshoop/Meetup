@@ -5,6 +5,8 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import BodyContainer from "./components/BodyContainer";
 import FooterContainer from "./components/FooterContainer";
+import { Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
@@ -16,10 +18,24 @@ function App() {
 
   return (
     <div className="app-div">
-      <Navigation isLoaded={isLoaded} />
-      <BodyContainer />
-      <FooterContainer />
-      {/* {isLoaded && <Switch></Switch>} */}
+      {/* <Navigation isLoaded={isLoaded} />
+      <FooterContainer /> */}
+      {isLoaded && <Switch>
+          <Route exact path='/'>
+            <Navigation isLoaded={isLoaded} />
+            <div>Splash page is currently under construction. Thank you for your patience!</div>
+            {/* <FooterContainer /> */}
+          </Route>
+          <Route path={['/groups', '/events']}>
+            <Navigation isLoaded={isLoaded} />
+            <BodyContainer />
+            <FooterContainer />
+          </Route>
+          <Route path='/groups/:groupId'>
+            <Navigation isLoaded={isLoaded} />
+            <FooterContainer />
+          </Route>
+        </Switch>}
     </div>
   );
 }

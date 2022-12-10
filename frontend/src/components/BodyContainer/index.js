@@ -3,10 +3,13 @@ import { useDispatch } from "react-redux";
 import EventGroupList from '../EventGroupList'
 import { loadGroups } from '../../store/groups';
 import { loadEvents } from '../../store/events';
+import { useLocation, useParams } from 'react-router-dom';
 
 const BodyContainer = () => {
+    const {pathname} = useLocation()
+    console.log(pathname.split('/'))
     const dispatch = useDispatch()
-    const [eventGroup, setEventGroup] = useState('events')
+    const [eventGroup, setEventGroup] = useState(pathname.split('/')[1])
 
     useEffect(() => {
         dispatch(loadGroups())

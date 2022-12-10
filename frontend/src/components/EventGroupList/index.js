@@ -1,10 +1,18 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const EventGroupList = ({ eventgroup }) => {
   const groups = useSelector((state) => Object.values(state.groups.allGroups));
   const groupList = Array.from(groups);
   const events = useSelector((state) => Object.values(state.events.allEvents));
   const eventList = Array.from(events);
+
+  const dispatch = useDispatch()
+
+  const handleDelete = (e, groupId) => {
+    e.preventDefault()
+    dispatch()
+  }
+
   let content;
   if (eventgroup === "groups") {
     content = groupList.map((group) => {
@@ -26,6 +34,7 @@ const EventGroupList = ({ eventgroup }) => {
             <li>Private: {group.private ? "Private" : "Public"}</li>
              {/* <li>Share: </li> // TODO - Share icon in bottom right corner*/}
           </ul>
+          <button onClick={(e) => handleDelete(e, group.id)}>Delete Group</button>
         </div>
       );
     });

@@ -169,7 +169,7 @@ const validateCreateGroup = [
     .withMessage('Type must be "Online" or "In person"'),
   check("private")
     .exists({ checkFalsy: true })
-    .isBoolean({ checkFalsy: true })
+    .isBoolean()
     .withMessage("Private must be a boolean"),
   check("city").exists({ checkFalsy: true }).withMessage("City is required"),
   check("state").exists({ checkFalsy: true }).withMessage("State is required"),
@@ -179,7 +179,6 @@ const validateCreateGroup = [
 // CREATE A GROUP post /api/groups
 router.post("/", requireAuth, validateCreateGroup, async (req, res, next) => {
   const { name, about, type, private, city, state } = req.body;
-
   let { user } = req;
   user = user.toJSON(); // user.id
 
