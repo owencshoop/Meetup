@@ -9,6 +9,7 @@ export const setGroups = (groups) => {
     }
 }
 
+// TODO - copy shitty feature where you can never access the 'add group' button because it keeps loading more events/groups
 export const loadGroups = () => async (dispatch) => {
     const response = await csrfFetch('/api/groups')
     if (response.ok){

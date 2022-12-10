@@ -1,35 +1,59 @@
 import { useSelector } from "react-redux";
 
-const EventGroupList = ({eventgroup}) => {
+const EventGroupList = ({ eventgroup }) => {
   const groups = useSelector((state) => Object.values(state.groups.allGroups));
   const groupList = Array.from(groups);
-  let content
-  if (eventgroup === 'groups') {
+  const events = useSelector((state) => Object.values(state.events.allEvents));
+  const eventList = Array.from(events);
+  let content;
+  if (eventgroup === "groups") {
     content = groupList.map((group) => {
-        return (
-          <div key={group.id} style={{border: "5px solid purple"}}>
-            {group.name}
-            <ul>
-                <li>Id: {group.id}</li>
-                <li>Organizer: {group.organizerId}</li>
-                <li>About: {group.about}</li>
-                <li>Location: {group.city}, {group.state}</li>
-                <li>Type: {group.type}</li>
-                <li>Private: {`${group.private}`}</li>
-            </ul>
-          </div>
-        );
-      })
-  } else {
-    content = <div>Events page is under construction</div>
+      return (
+        <div key={group.id} style={{ border: "5px solid purple", margin:'5px auto', boxSizing:'border-box'}}>
+          <ul>
+            <img
+              src={`${group.previewImage}`}
+              alt={`${group.name}'s Preview`}
+            ></img>
+            <li>UpdatedAt: {group.updatedAt}</li>
+            <li>CreatedAt: {group.createdAt}</li>
+            <li>Name: {group.name}</li>
+            <li>
+              Location: {group.city}, {group.state}
+            </li>
+            <li>About: {group.about}</li>
+            <li>numMembers: {group.numMembers}</li>
+            <li>Private: {group.private ? "Private" : "Public"}</li>
+             {/* <li>Share: </li> // TODO - Share icon in bottom right corner*/}
+          </ul>
+        </div>
+      );
+    });
+  } else if (eventgroup === "events") {
+    content = eventList.map((event) => {
+      return (
+        <div key={event.id} style={{ border: "5px solid purple", margin:'5px auto',}}>
+          <ul>
+            <img
+              src={`${event.previewImage}`}
+              alt={`${event.name}'s Preview`}
+            ></img>
+            <li>{event.type === "Online" ? "Online Event" : null}</li>
+            <li>Date: {event.startDate}</li>
+            <li>Name: {event.name}</li>
+            <li>Group: {event.Group.name}</li>
+            <li>Location: {event.Group.city}, {event.Group.state}</li>
+            {/* <li>Group updated/created at</li>  // TODO - need for 'New Group' addition on newer groups and will have to update api docs and backend */}
+            <li>numAttending: {event.numAttending}</li>
+            {/* <li>Share: </li> // TODO - Share icon in bottom right corner
+            <li>Favorite/Unfavorite </li> // TODO - favorite/unfavorite star in bottom right */}
+          </ul>
+        </div>
+      );
+    });
   }
 
-
-  return (
-    <div>
-        {content}
-    </div>
-  );
+  return <div>{content}</div>;
 };
 
 export default EventGroupList;
