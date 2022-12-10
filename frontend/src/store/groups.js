@@ -21,7 +21,6 @@ export const loadGroups = () => async (dispatch) => {
 const initialState = {allGroups: {}, singleGroup: {}}
 
 const groupReducer = (state = initialState, action) => {
-    console.log(action.payload)
     let newState;
     switch (action.type) {
         case LOAD_GROUPS:

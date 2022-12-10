@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
-const EventGroupList = ({ eventGroup }) => {
+const EventGroupList = ({eventgroup}) => {
   const groups = useSelector((state) => Object.values(state.groups.allGroups));
   const groupList = Array.from(groups);
-  return (
-    <div>
-      {groupList.map((group) => {
+  let content
+  if (eventgroup === 'groups') {
+    content = groupList.map((group) => {
         return (
           <div key={group.id} style={{border: "5px solid purple"}}>
             {group.name}
@@ -19,7 +19,15 @@ const EventGroupList = ({ eventGroup }) => {
             </ul>
           </div>
         );
-      })}
+      })
+  } else {
+    content = <div>Events page is under construction</div>
+  }
+
+
+  return (
+    <div>
+        {content}
     </div>
   );
 };
