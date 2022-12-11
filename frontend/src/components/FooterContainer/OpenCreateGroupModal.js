@@ -1,7 +1,7 @@
 import React from 'react';
 import { useModal } from '../../context/Modal';
 
-function OpenModalMenuItem({
+function OpenCreateGroupModal({
   modalComponent, // component to render inside the modal
   itemText, // text of the menu item that opens the modal
   onItemClick, // optional: callback function that will be called once the menu item that opens the modal is clicked
@@ -16,8 +16,8 @@ function OpenModalMenuItem({
   };
 
   return (
-    <p onClick={onClick} style={{border:'5px solid orange'}}>{itemText}</p>
+    <button onClick={onClick} style={{border:'5px solid teal'}}>{itemText}</button>
   );
 }
 
-export default OpenModalMenuItem;
+export default OpenCreateGroupModal;
