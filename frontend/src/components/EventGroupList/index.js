@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { deleteGroupThunk } from "../../store/groups";
-import { deleteEventThunk } from "../../store/events";
+import { useSelector } from "react-redux";
+// import { deleteGroupThunk } from "../../store/groups";
+// import { deleteEventThunk } from "../../store/events";
 import { Link } from "react-router-dom";
 
 const EventGroupList = ({ eventgroup }) => {
@@ -9,21 +9,21 @@ const EventGroupList = ({ eventgroup }) => {
   const events = useSelector((state) => Object.values(state.events.allEvents));
   const eventList = Array.from(events);
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
-  const handleGroupDelete = (e, groupId) => {
-    e.preventDefault()
-    dispatch(deleteGroupThunk(groupId))
-  }
+  // const handleGroupDelete = (e, groupId) => {
+  //   e.preventDefault()
+  //   dispatch(deleteGroupThunk(groupId))
+  // }
 
-  const handleEventDelete = (e, eventId) => {
-    e.preventDefault()
-    dispatch(deleteEventThunk(eventId))
-  }
+  // const handleEventDelete = (e, eventId) => {
+  //   e.preventDefault()
+  //   dispatch(deleteEventThunk(eventId))
+  // }
 
-  const handleGroupOnClick =() => {
+  // const handleGroupOnClick =() => {
 
-  }
+  // }
 
   let content;
   if (eventgroup === "groups") {
@@ -46,7 +46,7 @@ const EventGroupList = ({ eventgroup }) => {
             <li>Private: {group.private ? "Private" : "Public"}</li>
              {/* <li>Share: </li> // TODO - Share icon in bottom right corner*/}
           </ul>
-          <button onClick={(e) => handleGroupDelete(e, group.id)}>Delete Group</button>
+          {/* <button onClick={(e) => handleGroupDelete(e, group.id)}>Delete Group</button> */}
         </div>
       );
     });
@@ -69,7 +69,7 @@ const EventGroupList = ({ eventgroup }) => {
             {/* <li>Share: </li> // TODO - Share icon in bottom right corner
             <li>Favorite/Unfavorite </li> // TODO - favorite/unfavorite star in bottom right */}
           </ul>
-          <button onClick={(e) => handleEventDelete(e, event.id)}>Delete Event</button>
+          {/* <button onClick={(e) => handleEventDelete(e, event.id)}>Delete Event</button> */}
         </div>
       );
     });

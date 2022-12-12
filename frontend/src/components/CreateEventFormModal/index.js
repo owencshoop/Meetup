@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { addGroupThunk } from "../../store/groups";
+import { addEventThunk } from "../../store/events";
 
-function CreateGroupModalForm() {
+function CreateEventFormModal({group}) {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-  const [type, setType] = useState("In person");
-  const [_private, setPrivate] = useState(false);
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
+  const [venueId, setVenueId] = useState('');
+  const [name, setName] = useState('')
+  const [type, setType] = useState('In person');
+  const [capacity, setCapacity] = useState('')
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
 
@@ -18,14 +20,16 @@ function CreateGroupModalForm() {
     e.preventDefault();
     setErrors([]);
     return dispatch(
-      addGroupThunk({
+      addEventThunk({
+        venueId,
         name,
-        about,
         type,
-        private: _private,
-        city,
-        state,
-      })
+        capacity,
+        price,
+        description,
+        startDate,
+        endDate
+      }, group.id)
     )
       .then(closeModal)
       .catch(async (res) => {
@@ -85,11 +89,10 @@ function CreateGroupModalForm() {
           value={_private}
           checked={_private ? 'checked' : ''}
           onChange={(e) => {
-            setPrivate(!_private)
+            setPrivate(_private === false)
             }}
           />
           </label>
-
         <label htmlFor="city">
           City:
           <input
@@ -110,10 +113,10 @@ function CreateGroupModalForm() {
             required
           />
         </label>
-        <button type="submit">Create Group</button>
+        <button type="submit">Update Group</button>
       </form>
     </div>
   );
 }
 
-export default CreateGroupModalForm;
+export default CreateEventFormModal

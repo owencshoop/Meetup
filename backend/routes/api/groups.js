@@ -168,7 +168,7 @@ const validateCreateGroup = [
     .isIn(["Online", "In person"], ["Online", "In person"])
     .withMessage('Type must be "Online" or "In person"'),
   check("private")
-    .exists({ checkFalsy: true })
+    .exists()
     .isBoolean()
     .withMessage("Private must be a boolean"),
   check("city").exists({ checkFalsy: true }).withMessage("City is required"),
