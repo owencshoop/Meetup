@@ -1,22 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getEventThunk } from "../../store/events";
+import { deleteEventThunk } from "../../store/events";
 
 const EventShow = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const { eventId } = useParams();
   const event = useSelector((state) => state.events.singleEvent);
+  const history = useHistory()
+
   useEffect(() => {
     dispatch(getEventThunk(eventId)).then(() => setIsLoaded(true));
   }, [dispatch, eventId]);
+
+  const handleEventDelete = (e, eventId) => {
+    e.preventDefault()
+    dispatch(deleteEventThunk(eventId))
+    history.push('/events')
+  }
+
   return (
     <div>
       {isLoaded && (
         <div>
           <img
-            src={event.EventImages ? `${event.EventImages[0].url}` : ""}
+            src={`${event.EventImages[0]?.url}`}
             alt={`${event.name} Preview'`}
           ></img>
           <li>Event Id: {event.id}</li>
@@ -40,6 +50,7 @@ const EventShow = () => {
               Location: {event.Group.city}, {event.Group.state}
             </li>
           </ul>
+          <button onClick={(e) => handleEventDelete(e, event.id)}>Delete Event</button>
         </div>
       )}
     </div>

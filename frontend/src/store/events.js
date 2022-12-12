@@ -1,6 +1,7 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_EVENTS = "events/LOAD_EVENTS";
+const ADD_EVENT = "events/ADD_EVENT";
 const GET_EVENT = "events/GET_EVENT";
 const DELETE_EVENT = "event/DELETE_EVENT";
 
@@ -8,6 +9,13 @@ export const setEvents = (events) => {
   return {
     type: LOAD_EVENTS,
     payload: events,
+  };
+};
+
+export const addEvent = (event) => {
+  return {
+    type: ADD_EVENT,
+    payload: event,
   };
 };
 
@@ -32,6 +40,21 @@ export const loadEvents = () => async (dispatch) => {
     const data = await response.json();
     dispatch(setEvents(data.Events));
     return data.Groups;
+  }
+};
+
+export const addEventThunk = (event, groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}/events`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(event)
+  });
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(addEvent(data))
+    return data
   }
 };
 
@@ -64,6 +87,12 @@ const eventReducer = (state = initialState, action) => {
       newState = { ...state };
       action.payload.forEach((event) => (newState.allEvents[event.id] = event));
       return newState;
+    case ADD_EVENT:
+      newState = {...state,
+      allEvents: {...state.allEvents, [action.payload.id]: action.payload},
+      singleGroup: {...action.payload}
+      }
+      return newState
     case GET_EVENT:
       newState = { ...state, singleEvent: { ...action.payload } };
       return newState;

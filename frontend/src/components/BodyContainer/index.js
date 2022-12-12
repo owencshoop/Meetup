@@ -3,11 +3,10 @@ import { useDispatch } from "react-redux";
 import EventGroupList from '../EventGroupList'
 import { loadGroups } from '../../store/groups';
 import { loadEvents } from '../../store/events';
-import { NavLink, Switch, useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const BodyContainer = () => {
     const {pathname} = useLocation()
-    console.log(pathname.split('/'))
     const dispatch = useDispatch()
     const [eventGroup, setEventGroup] = useState(pathname.split('/')[1])
 
@@ -15,8 +14,6 @@ const BodyContainer = () => {
         dispatch(loadGroups())
         dispatch(loadEvents())
     }, [dispatch, eventGroup])
-
-    // console.log('bodycontainter', eventGroup)
 
     return (
         <div className="body-div" style={{border:'5px solid red', display: 'block', margin: '5px auto', maxWidth: '600px', boxSizing: 'border-box'}}>
