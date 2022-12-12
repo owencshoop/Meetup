@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { addGroupThunk } from "../../store/groups";
 
@@ -13,6 +14,7 @@ function CreateGroupModalForm() {
   const [state, setState] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +29,7 @@ function CreateGroupModalForm() {
         state,
       })
     )
+      .then(data => history.push(`/groups/${data.id}`))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();

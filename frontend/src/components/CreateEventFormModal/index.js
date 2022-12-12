@@ -1,36 +1,43 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { addEventThunk } from "../../store/events";
 
-function CreateEventFormModal({group}) {
+function CreateEventFormModal({ group }) {
   const dispatch = useDispatch();
-  const [venueId, setVenueId] = useState('');
-  const [name, setName] = useState('')
-  const [type, setType] = useState('In person');
-  const [capacity, setCapacity] = useState('')
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const [venueId, setVenueId] = useState();
+  const [name, setName] = useState("");
+  const [type, setType] = useState("In person");
+  const [capacity, setCapacity] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
+  const history = useHistory();
+  //   console.log('event', event)
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
     return dispatch(
-      addEventThunk({
-        venueId,
-        name,
-        type,
-        capacity,
-        price,
-        description,
-        startDate,
-        endDate
-      }, group.id)
+      addEventThunk(
+        {
+          venueId,
+          name,
+          type,
+          capacity,
+          price,
+          description,
+          startDate,
+          endDate
+        },
+        group.id
+      )
     )
+      .then((data) => history.push(`/events/${data.id}`))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -40,7 +47,7 @@ function CreateEventFormModal({group}) {
 
   return (
     <div style={{ border: "3px solid yellow" }}>
-      <h1>Create A Group</h1>
+      <h1>Create an Event</h1>
       <form
         onSubmit={handleSubmit}
         style={{
@@ -50,7 +57,9 @@ function CreateEventFormModal({group}) {
         }}
       >
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
         </ul>
         <label>
           Name:
@@ -63,60 +72,89 @@ function CreateEventFormModal({group}) {
           />
         </label>
         <label htmlFor="about">
-          About:
+          Description:
           <input
             id="about"
             type="text"
-            onChange={(e) => setAbout(e.target.value)}
-            value={about}
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
             required
           />
         </label>
-        <select
-          name="type"
-          onChange={(e) => setType(e.target.value)}
-          value={type}
-        >
-          <option value="In person">In person</option>
-          <option value="Online">Online</option>
-        </select>
-        <label htmlFor='private'>
-          Private?
-        <input
-          type='checkbox'
-          id='private'
-          name='private'
-          value={_private}
-          checked={_private ? 'checked' : ''}
-          onChange={(e) => {
-            setPrivate(_private === false)
-            }}
-          />
-          </label>
+        <label htmlFor="type">
+          Type:
+          <select
+            name="type"
+            onChange={(e) => setType(e.target.value)}
+            value={type}
+          >
+            <option value="In person">In person</option>
+            <option value="Online">Online</option>
+          </select>
+        </label>
+        <label htmlFor="venueId">
+          Venue:
+          <select
+            name="venueId"
+            onChange={(e) => setVenueId(e.target.value)}
+            value={venueId}
+          >
+            <option selected disabled>
+              Select a venue
+            </option>
+            {group.Venues?.map((venue) => {
+              return (
+                <option value={`${venue.id}`}>
+                  {venue.address}, {venue.city}, {venue.state}
+                </option>
+              );
+            })}
+          </select>
+        </label>
         <label htmlFor="city">
-          City:
+          Capacity:
           <input
             id="city"
             type="text"
-            onChange={(e) => setCity(e.target.value)}
-            value={city}
+            onChange={(e) => setCapacity(e.target.value)}
+            value={capacity}
             required
           />
         </label>
         <label htmlFor="state">
-          State:
+          Price:
           <input
             id="state"
             type="text"
-            onChange={(e) => setState(e.target.value)}
-            value={state}
+            onChange={(e) => setPrice(e.target.value)}
+            value={price}
             required
           />
         </label>
-        <button type="submit">Update Group</button>
+        <label htmlFor="startDate">
+          Start Date:
+          <input
+            id="startDate"
+            type="datetime-local"
+            onChange={(e) => setStartDate(e.target.value)}
+            value={startDate}
+            required
+          />
+        </label>
+        <label htmlFor="endDate">
+          End Date:
+          <input
+            id="endDate"
+            type="datetime-local"
+            onChange={(e) => setEndDate(e.target.value)}
+            value={endDate}
+            required
+          />
+        </label>
+        <button type="submit">Create Event</button>
       </form>
     </div>
   );
 }
 
-export default CreateEventFormModal
+export default CreateEventFormModal;

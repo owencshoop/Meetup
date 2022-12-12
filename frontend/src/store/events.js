@@ -38,6 +38,7 @@ export const loadEvents = () => async (dispatch) => {
   const response = await csrfFetch("/api/events");
   if (response.ok) {
     const data = await response.json();
+    console.log(data.Events)
     dispatch(setEvents(data.Events));
     return data.Groups;
   }
@@ -90,11 +91,11 @@ const eventReducer = (state = initialState, action) => {
     case ADD_EVENT:
       newState = {...state,
       allEvents: {...state.allEvents, [action.payload.id]: action.payload},
-      singleGroup: {...action.payload}
+      singleEvent: {...action.payload}
       }
       return newState
     case GET_EVENT:
-      newState = { ...state, singleEvent: { ...action.payload } };
+      newState = { ...state, allEvents: {...state.allEvents, [action.payload.id]: action.payload}, singleEvent: {...state.singleEvent, ...action.payload } };
       return newState;
     case DELETE_EVENT:
       newState = { ...state };

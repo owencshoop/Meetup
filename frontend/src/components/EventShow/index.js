@@ -18,7 +18,7 @@ const EventShow = () => {
   const handleEventDelete = (e, eventId) => {
     e.preventDefault()
     dispatch(deleteEventThunk(eventId))
-    history.push('/events')
+    .then(history.push('/events'))
   }
 
   return (
@@ -36,20 +36,19 @@ const EventShow = () => {
           <li>Capacity: {event.capacity}</li>
           <li>Price: {event.price}</li>
           <li>Time: {event.startDate} - {event.EndDate}</li>
-          <li>
-            Venue Address: {event.Venue.address} {event.Venue.city},{" "}
-            {event.Venue.state}
-          </li>
+          {event.Venue && <li>
+            Venue Address: {event.Venue?.address} {event.Venue?.city},{" "}
+            {event.Venue?.state}
+          </li>}
           <li>Type: {event.type}</li>
-          <li>{event.private ? "Private" : "Public"}</li>
-          <ul>
+          {event.Group && <ul>
             Group:
-            <li>Name: {event.Group.name}</li>
-            <li>{event.Group.private ? "Private" : "Public"}</li>
+            <li>Name: {event.Group?.name}</li>
+            <li>{event.Group?.private ? "Private" : "Public"}</li>
             <li>
-              Location: {event.Group.city}, {event.Group.state}
+              Location: {event.Group?.city}, {event.Group?.state}
             </li>
-          </ul>
+          </ul>}
           <button onClick={(e) => handleEventDelete(e, event.id)}>Delete Event</button>
         </div>
       )}

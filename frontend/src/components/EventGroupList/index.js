@@ -62,8 +62,8 @@ const EventGroupList = ({ eventgroup }) => {
             <li>{event.type === "Online" ? "Online Event" : null}</li>
             <li>Date: {event.startDate}</li>
             <Link to={`/events/${event.id}`}>Name: {event.name}</Link>
-            <li>Group: {event.Group.name}</li>
-            <li>Location: {event.Group.city}, {event.Group.state}</li>
+            <li>Group: {event.Group?.name}</li>
+            <li>Location: {event.Group?.city}, {event.Group?.state}</li>
             {/* <li>Group updated/created at</li>  // TODO - need for 'New Group' addition on newer groups and will have to update api docs and backend */}
             <li>numAttending: {event.numAttending}</li>
             {/* <li>Share: </li> // TODO - Share icon in bottom right corner

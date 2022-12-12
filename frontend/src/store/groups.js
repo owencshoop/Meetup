@@ -131,7 +131,7 @@ const groupReducer = (state = initialState, action) => {
       };
       return newState;
     case GET_GROUP:
-      newState = { ...state, singleGroup: { ...action.payload } };
+      newState = { ...state, singleGroup: {...state.singleGroup, ...action.payload } };
       return newState;
     case DELETE_GROUP:
       newState = { ...state };
