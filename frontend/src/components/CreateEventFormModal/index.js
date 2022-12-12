@@ -17,7 +17,6 @@ function CreateEventFormModal({ group }) {
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory();
-  //   console.log('event', event)
 
   const handleSubmit = (e) => {
     e.preventDefault();
