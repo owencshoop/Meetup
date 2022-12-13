@@ -107,14 +107,14 @@ const groupReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
     case LOAD_GROUPS:
-      newState = { ...state };
+      newState = { ...state, allGroups: {...state.allGroups}, singleGroup: {...state.singleGroup} };
       action.payload.forEach((group) => (newState.allGroups[group.id] = group));
       return newState;
     case ADD_GROUP:
       newState = {
         ...state,
         allGroups: { ...state.allGroups, [action.payload.id]: action.payload },
-        singleGroup: { ...action.payload },
+        singleGroup: { ...state.singleGroup }, // dont change single group
       };
       return newState;
     case EDIT_GROUP:
@@ -127,14 +127,14 @@ const groupReducer = (state = initialState, action) => {
             ...action.payload,
           },
         },
-        singleGroup: { ...state.singleGroup, ...action.payload },
+        singleGroup: { ...state.singleGroup},
       };
       return newState;
     case GET_GROUP:
-      newState = { ...state, singleGroup: { ...action.payload } };
+      newState = { ...state, allGroups: {...state.allGroups, [action.payload.id]: action.payload}, singleGroup: {...state.singleGroup, ...action.payload } };
       return newState;
     case DELETE_GROUP:
-      newState = { ...state };
+      newState = { ...state, allGroups: {...state.allGroups} };
       delete newState.allGroups[action.payload];
       return newState;
     default:

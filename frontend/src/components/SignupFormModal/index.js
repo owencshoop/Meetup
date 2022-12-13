@@ -32,7 +32,6 @@ function SignupFormModal() {
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors){
-            console.log('in handlesubmit if block', data, 'data errors', data.errors)
             setErrors(Object.values(data.errors))
             };
         });

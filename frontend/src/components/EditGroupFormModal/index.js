@@ -3,13 +3,13 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { editGroupThunk } from "../../store/groups";
 
-function EditGroupFormModal({group}) {
+function EditGroupFormModal({ group }) {
   const dispatch = useDispatch();
-  const [name, setName] = useState(group.name)
+  const [name, setName] = useState(group.name);
   const [about, setAbout] = useState(group.about);
   const [type, setType] = useState(group.type);
   const [_private, setPrivate] = useState(group.private);
-  const [city, setCity] = useState(group.city)
+  const [city, setCity] = useState(group.city);
   const [state, setState] = useState(group.state);
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
@@ -18,14 +18,17 @@ function EditGroupFormModal({group}) {
     e.preventDefault();
     setErrors([]);
     return dispatch(
-      editGroupThunk({
-        name,
-        about,
-        type,
-        private: _private,
-        city,
-        state,
-      }, group.id)
+      editGroupThunk(
+        {
+          name,
+          about,
+          type,
+          private: _private,
+          city,
+          state,
+        },
+        group.id
+      )
     )
       .then(closeModal)
       .catch(async (res) => {
@@ -46,7 +49,9 @@ function EditGroupFormModal({group}) {
         }}
       >
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
         </ul>
         <label>
           Name:
@@ -76,47 +81,19 @@ function EditGroupFormModal({group}) {
           <option value="In person">In person</option>
           <option value="Online">Online</option>
         </select>
-        <label htmlFor='private'>
+        <label htmlFor="private">
           Private?
-        <input
-          type='checkbox'
-          id='private'
-          name='private'
-          value={_private}
-          checked={_private ? 'checked' : ''}
-          onChange={(e) => {
-            setPrivate(_private === false)
+          <input
+            type="checkbox"
+            id="private"
+            name="private"
+            value={_private}
+            checked={_private ? "checked" : ""}
+            onChange={(e) => {
+              setPrivate(_private === false);
             }}
           />
-          </label>
-        {/* <label htmlFor="private1">
-          Private:
-          <input
-            type="radio"
-            id="private1"
-            name="private"
-            value={true}
-            checked={_private === true ? "checked" : ""}
-            onChange={(e) => {
-              console.log("in the true button", _private);
-              setPrivate(e.target.value);
-            }}
-          ></input>
         </label>
-        <label>
-          {"  "}Public
-          <input
-            type="radio"
-            id="private2"
-            name="private"
-            value={false}
-            checked={_private === false ? "checked" : ""}
-            onChange={(e) => {
-              console.log("in the false button", _private);
-              setPrivate(e.target.value);
-            }}
-          ></input>
-        </label> */}
         <label htmlFor="city">
           City:
           <input
@@ -143,4 +120,4 @@ function EditGroupFormModal({group}) {
   );
 }
 
-export default EditGroupFormModal
+export default EditGroupFormModal;
