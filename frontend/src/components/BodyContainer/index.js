@@ -22,9 +22,7 @@ const BodyContainer = () => {
                 <NavLink to ='/events' onClick={() => setEventGroup('events')} style={{borderBottom:`${eventGroup === 'events' ? '4px solid #008294' : ''}`, marginRight:'10px', textDecoration:'none', color:`${eventGroup === 'events' ? '#008294' : 'black'}`}}>Events</NavLink>
                 <NavLink to='/groups' onClick={() => setEventGroup('groups')} style={{borderBottom:`${eventGroup === 'groups' ? '4px solid #008294' : ''}`, marginRight:'10px', textDecoration:'none', color:`${eventGroup === 'groups' ? '#008294' : 'black'}`}}>Groups</NavLink>
             </div>
-            <div className="event-group-list-container" style={{border: '5px solid green', width: '100%', boxSizing: 'border-box'}}>
-                <EventGroupList eventgroup={eventGroup} />
-            </div>
+            <EventGroupList eventgroup={eventGroup} />
         </div>
     )
 }

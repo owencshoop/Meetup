@@ -13,22 +13,22 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         groupId: 1,
-        url: 'group1sampleurl.com',
+        url: 'https://media.istockphoto.com/id/1346125184/photo/group-of-successful-multiethnic-business-team.jpg?s=612x612&w=0&k=20&c=5FHgRQZSZed536rHji6w8o5Hco9JVMRe8bpgTa69hE8=',
         preview: true
       },
       {
         groupId: 2,
-        url: 'group2sampleurl.com',
+        url: 'https://media.istockphoto.com/id/1272744431/photo/theyre-ready-to-push-towards-success-with-tenacity-and-confidence.jpg?s=612x612&w=0&k=20&c=H-e_iD5k3NK9PrzVFZWPM8TXCLmW4nv88B9PxqmZlys=',
         preview: true
       },
       {
         groupId: 3,
-        url: 'group3sampleurl.com',
+        url: 'https://media.istockphoto.com/id/175742908/photo/team-positivity.jpg?s=612x612&w=0&k=20&c=EPVM3kSQ6GVG32KS11ZZchczbAtRFl-GMMU37Hpewvw=',
         preview: true
       },
       {
         groupId: 4,
-        url: 'group4sampleurl.com',
+        url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbO-CPc6gr8ENPe_Q0gdh-WKWhjjWUwtU4Sg&usqp=CAU',
         preview: true
       }
     ])
