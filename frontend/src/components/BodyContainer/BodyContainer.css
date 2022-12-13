@@ -1,0 +1,20 @@
+.body-div {
+    border:5px solid white;
+    display: block;
+    margin: 5px auto;
+    max-width: 600px;
+    box-sizing: border-box;
+    position: sticky;
+}
+
+.event-group-selector-container {
+    border: 5px solid orange;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: left;
+    margin:10px auto;
+    position:sticky;
+    top: 63px;
+    background-color:white;
+}
