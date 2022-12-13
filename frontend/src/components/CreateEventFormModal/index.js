@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { addEventThunk } from "../../store/events";
+import './CreateEventFormModal.css'
 
 function CreateEventFormModal({ group }) {
   const dispatch = useDispatch();

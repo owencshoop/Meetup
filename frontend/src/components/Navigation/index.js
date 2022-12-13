@@ -8,7 +8,7 @@ function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
   return (
-    <nav className='navdiv'  style={{border: '5px solid blue'}}>
+    <nav className='navdiv'>
       <div>
         <NavLink exact to="/">down2meet</NavLink>
       </div>

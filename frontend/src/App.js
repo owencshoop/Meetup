@@ -19,7 +19,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="app-div">
+    <div className="app-div" style={{position: 'relative'}}>
       {/* <Navigation isLoaded={isLoaded} />
       <FooterContainer /> */}
       {isLoaded && (
