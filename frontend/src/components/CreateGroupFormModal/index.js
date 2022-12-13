@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { addGroupThunk } from "../../store/groups";
+import './CreateGroupFormModal.css'
 
 function CreateGroupModalForm() {
   const dispatch = useDispatch();

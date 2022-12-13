@@ -97,7 +97,7 @@ const eventReducer = (state = initialState, action) => {
       newState = { ...state, allEvents: {...state.allEvents, [action.payload.id]: action.payload}, singleEvent: {...state.singleEvent, ...action.payload } };
       return newState;
     case DELETE_EVENT:
-      newState = { ...state, allEvents: {...state.allEvents} };
+      newState = { ...state, allEvents: {...state.allEvents}, singleEvent: {} };
       delete newState.allEvents[action.payload];
       return newState;
     default:

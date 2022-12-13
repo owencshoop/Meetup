@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 // import { deleteGroupThunk } from "../../store/groups";
 // import { deleteEventThunk } from "../../store/events";
 import { Link } from "react-router-dom";
+import './EventGroupList.css'
 
 const EventGroupList = ({ eventgroup }) => {
   const groups = useSelector((state) => Object.values(state.groups.allGroups));

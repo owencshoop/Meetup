@@ -7,6 +7,7 @@ import CreateEventFormModal from "../CreateEventFormModal";
 import EditGroupFormModal from "../EditGroupFormModal";
 import OpenCreateEventModal from "./OpenCreateEventModal";
 import OpenEditGroupFormModal from "./OpenEditGroupModal";
+import './GroupShow.css'
 
 const GroupShow = () => {
   const [isLoaded, setIsLoaded] = useState(false);

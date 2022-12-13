@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { editGroupThunk } from "../../store/groups";
+import './EditGroupFormModal.css'
 
 function EditGroupFormModal({ group }) {
   const dispatch = useDispatch();
