@@ -3,35 +3,97 @@
 .group-show-container {
     border: 3px solid red;
     max-width: 1060px;
-    margin: auto;
+    margin: 20px auto;
+    box-sizing: border-box;
+    margin-bottom: 20px;
 }
 
 .group-show-image-name-container {
     border: 3px solid yellow;
-    display: flex
+    display: flex;
+    box-sizing: border-box;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 40px;
 }
 
 .group-show-image-container {
     border: 3px solid blue;
+    width: 60%;
+    margin-right: 20px;
+    height: 335px;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 8px;
 }
 
 .group-show-image {
     object-fit: fill;
     overflow: hidden;
+    width: 100%;
+
+    box-sizing: border-box;
 }
 
 .group-show-name-container {
-    border: 3px solid orange
+    border: 3px solid orange;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.group-show-name {
+    font-weight: 700;
+    margin-top: 0;
+}
+
+.group-show-location-members-organizer {
+    font-size: 14px;
+    color: #212121;
+    font-weight: 400;
+}
+
+.group-show-name-organizer {
+    font-weight: bold;
+}
+
+.group-show-name-content {
+    display: flex;
+    gap: 2px;
+    margin-top: 5px;
+}
+
+.group-show-name-icons {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .group-show-body-container {
     border: 3px solid green;
+    display: flex;
+    box-sizing: border-box;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 40px;
+    padding-top: 40px
 }
 
 .group-show-about-container {
-    border: 3px solid magenta
+    border: 3px solid magenta;
+    width: 60%;
+    margin-right: 20px;
+    box-sizing: border-box;
 }
 
 .group-show-organizer-member-container {
-    border: 3px solid purple
+    border: 3px solid purple;
+    width: 50%;
+    box-sizing: border-box;
+
+}
+
+.group-show-button-container {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    margin: 20px auto;
 }
