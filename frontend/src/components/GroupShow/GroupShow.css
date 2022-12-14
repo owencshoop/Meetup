@@ -1,1 +1,37 @@
 /* filler  */
+
+.group-show-container {
+    border: 3px solid red;
+    max-width: 1060px;
+    margin: auto;
+}
+
+.group-show-image-name-container {
+    border: 3px solid yellow;
+    display: flex
+}
+
+.group-show-image-container {
+    border: 3px solid blue;
+}
+
+.group-show-image {
+    object-fit: fill;
+    overflow: hidden;
+}
+
+.group-show-name-container {
+    border: 3px solid orange
+}
+
+.group-show-body-container {
+    border: 3px solid green;
+}
+
+.group-show-about-container {
+    border: 3px solid magenta
+}
+
+.group-show-organizer-member-container {
+    border: 3px solid purple
+}

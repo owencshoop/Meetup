@@ -214,7 +214,7 @@ const addImageValidator = [
     .isURL()
     .withMessage("URL must be a URL"),
   check("preview")
-    .exists({ checkFalsy: true })
+    .exists()
     .isBoolean()
     .withMessage("Preview must be true or false"),
 ];

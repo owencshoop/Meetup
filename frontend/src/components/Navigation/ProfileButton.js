@@ -44,7 +44,7 @@ function ProfileButton({ user }) {
       <button className="profileButton" onClick={openMenu}>
         {user ? user.firstName[0].toUpperCase() : <i className="fas fa-user-circle" />}
       </button>
-      <ul className={ulClassName} ref={ulRef} style={{border: '5px solid red'}}>
+      <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li>{user.username}</li>
@@ -55,7 +55,7 @@ function ProfileButton({ user }) {
             </li>
           </>
         ) : (
-          <div style={{border:'5px solid yellow'}}>
+          <div>
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
