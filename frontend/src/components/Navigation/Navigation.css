@@ -36,3 +36,9 @@
     min-width: 190px;
     background-color: white;
 }
+
+.navigation-logo {
+    color: rgb(224, 70, 70);
+    font-family:cursive;
+    text-decoration: none;
+}

@@ -10,7 +10,7 @@ function Navigation({ isLoaded }){
   return (
     <nav className='navdiv'>
       <div>
-        <NavLink exact to="/">down2meet</NavLink>
+        <NavLink className='navigation-logo' exact to="/">down2meet</NavLink>
       </div>
       {isLoaded && (
         <div>
