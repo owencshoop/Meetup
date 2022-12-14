@@ -1,7 +1,7 @@
 /* filler  */
 
 .group-show-container {
-    border: 3px solid red;
+    /* border: 3px solid red; */
     max-width: 1060px;
     margin: 20px auto;
     box-sizing: border-box;
@@ -9,15 +9,16 @@
 }
 
 .group-show-image-name-container {
-    border: 3px solid yellow;
+    /* border: 3px solid yellow; */
     display: flex;
     box-sizing: border-box;
     border-bottom: 1px solid lightgray;
     padding-bottom: 40px;
+    color: #212121;
 }
 
 .group-show-image-container {
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
     width: 60%;
     margin-right: 20px;
     height: 335px;
@@ -35,7 +36,7 @@
 }
 
 .group-show-name-container {
-    border: 3px solid orange;
+    /* border: 3px solid orange; */
     width: 50%;
     box-sizing: border-box;
 }
@@ -69,7 +70,7 @@
 }
 
 .group-show-body-container {
-    border: 3px solid green;
+    /* border: 3px solid green; */
     display: flex;
     box-sizing: border-box;
     border-bottom: 1px solid lightgray;
@@ -78,17 +79,24 @@
 }
 
 .group-show-about-container {
-    border: 3px solid magenta;
+    /* border: 3px solid magenta; */
     width: 60%;
     margin-right: 20px;
     box-sizing: border-box;
+    color: #212121;
+    font-size: 16px;
+}
+
+.group-show-about-title {
+    font-size: 20px;
 }
 
 .group-show-organizer-member-container {
-    border: 3px solid purple;
+    /* border: 3px solid purple; */
     width: 50%;
     box-sizing: border-box;
-
+    padding-left: 20px;
+    color: #212121;
 }
 
 .group-show-button-container {

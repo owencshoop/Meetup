@@ -79,12 +79,15 @@ const GroupShow = () => {
           </div>
           <div className="group-show-body-container">
             <div className="group-show-about-container">
-              <div>Description: {group.about}</div>
+              <h2 className="group-show-about-title">What we're about</h2>
+              <p>{group.about}</p>
             </div>
             <div className="group-show-organizer-member-container">
               <div className="group-show-organizer-container">
-                Organizer: {group.Organizer.firstName}{" "}
-                {group.Organizer.lastName}
+                <h3>Organizers</h3>
+                <div>
+                  {group.Organizer.firstName} {group.Organizer.lastName}
+                </div>
               </div>
             </div>
           </div>
