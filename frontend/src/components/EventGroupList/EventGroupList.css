@@ -18,7 +18,7 @@
 }
 
 .group-list-image-container {
-    border: 3px solid yellow;
+    /* border: 3px solid yellow; */
     box-sizing: border-box;
     min-width: 178px;
     height: 100px;
@@ -31,10 +31,11 @@
     object-fit: fill;
     height: 100px;
     width: 178px;
+    border-radius: 5px;
 }
 
 .group-list-content-container {
-    border: 3px solid goldenrod;
+    /* border: 3px solid goldenrod; */
     box-sizing: border-box;
     min-width: 427px;
     display: flex;
@@ -42,13 +43,10 @@
     justify-content: space-between;
 }
 
-.group-name-location-container {
-}
-
 .group-list-name {
     margin: 0;
     font-weight: 650;
-    font-size: 25px;
+    font-size: 23px;
     font: expanded;
     text-overflow: ellipsis;
     text-decoration: none;
@@ -76,7 +74,84 @@
 }
 
 .events-list-container {
-    width: 90%;
+    width: 571px;
     box-sizing: border-box;
-    border: 3px solid palevioletred;
+    /* border: 3px solid palevioletred; */
+}
+
+.event-list-item {
+    border-top: 1px solid lightgrey;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: left;
+    padding-top: 14px;
+    padding-bottom: 10px;
+    min-height: 162px;
+}
+
+.event-list-image-container {
+    box-sizing: border-box;
+    min-width: 156.48px;
+    height: 88.11px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+
+.event-list-image {
+    object-fit: fill;
+    height: 88.11px;
+    width: 156.48px;
+    border-radius: 5px;
+}
+
+.event-list-content-container {
+    /* border: 3px solid goldenrod; */
+    box-sizing: border-box;
+    min-width: 395px;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between; */
+}
+
+.event-list-start-date {
+    margin: 0;
+    font-weight: 500;
+    font-size: medium;
+    color: rgb(135, 116, 87, .8);
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    padding-bottom: 2px;
+}
+
+.event-list-name {
+    margin: 0;
+    font-weight: 500;
+    font-size: 18px;
+    font: expanded;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: rgb(33, 33, 33);
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.event-list-group-location {
+    text-overflow: ellipsis;
+    color: rgb(117, 117, 117, 1);
+    font-size: 14px;
+}
+
+.event-list-attending-share-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 33px;
+}
+
+.event-list-num-attending {
+    color: rgb(117, 117, 117, 1);
+}
+
+.event-list-share-favorite-container {
+    padding-right: 5px;
 }

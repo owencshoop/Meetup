@@ -4,7 +4,7 @@ import './FooterContainer.css'
 
 const FooterContainer = () => {
   return (
-    <div style={{border:'5px solid magenta', display:'flex', justifyContent:'center', margin:'10px auto', position: 'relative'}}>
+    <div className="footer-container">
       <OpenCreateGroupModal
         itemText="Create a Group"
         modalComponent={<CreateGroupModalForm />}
