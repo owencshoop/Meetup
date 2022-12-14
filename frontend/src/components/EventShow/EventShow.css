@@ -99,7 +99,7 @@
 }
 
 .event-show-group-image {
-    object-fit: contain;
+    object-fit: fill;
     overflow: hidden;
 }
 

@@ -67,6 +67,15 @@ const EventGroupList = ({ eventgroup }) => {
     });
   } else if (eventgroup === "events") {
     content = eventList.map((event) => {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const startDate = new Date(event.startDate);
+      const startDay = startDate.toLocaleDateString(undefined, options);
+      const startTime = startDate.toLocaleTimeString("en-Us");
       return (
         <div key={event.id} className="event-list-item">
           <div className="event-list-image-container">
@@ -78,7 +87,7 @@ const EventGroupList = ({ eventgroup }) => {
           </div>
           <div className="event-list-content-container">
             <div className="event-list-content-top">
-              <div className="event-list-start-date">{event.startDate}</div>
+              <div className="event-list-start-date">{startDay} • {startTime}</div>
               <h2 className="event-list-name">
                 <Link className="event-list-name" to={`/events/${event.id}`}>
                   {event.name}
