@@ -26,8 +26,8 @@ const EventGroupList = ({ eventgroup }) => {
   if (eventgroup === "groups") {
     content = groupList.map((group) => {
       return (
-        <NavLink className="group-nav-link" to={`/groups/${group.id}`}>
-          <div key={group.id} className="group-list-item">
+        <NavLink key={group.id} className="group-nav-link" to={`/groups/${group.id}`}>
+          <div className="group-list-item">
             <div className="group-list-image-container">
               <img
                 className="group-list-image"
@@ -43,7 +43,7 @@ const EventGroupList = ({ eventgroup }) => {
                   {group.city}, {group.state}
                 </h3>
               </div>
-              <p class="group-description">{group.about}</p>
+              <p className="group-description">{group.about}</p>
               <div className="group-members-private-container">
                 <div>
                   {group.numMembers}{" "}
@@ -51,7 +51,7 @@ const EventGroupList = ({ eventgroup }) => {
                   {group.private ? "Private" : "Public"}
                 </div>
                 <div>
-                  <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                  <i className="fa-solid fa-arrow-up-from-bracket"></i>
                 </div>
               </div>
               {/* <li>Share: </li> // TODO - Share icon in bottom right corner*/}
@@ -72,8 +72,8 @@ const EventGroupList = ({ eventgroup }) => {
       const startDay = startDate.toLocaleDateString(undefined, options);
       const startTime = startDate.toLocaleTimeString("en-Us");
       return (
-        <NavLink className="group-nav-link" to={`/events/${event.id}`}>
-          <div key={event.id} className="event-list-item">
+        <NavLink key={event.id} className="group-nav-link" to={`/events/${event.id}`}>
+          <div className="event-list-item">
             <div className="event-list-image-container">
               <img
                 className="event-list-image"
@@ -87,9 +87,7 @@ const EventGroupList = ({ eventgroup }) => {
                   {startDay} • {startTime}
                 </div>
                 <h2 className="event-list-name">
-                  <Link className="event-list-name" to={`/events/${event.id}`}>
                     {event.name}
-                  </Link>
                 </h2>
                 <div className="event-list-group-location">
                   {event.Group?.name} · {event.Group?.city},{" "}

@@ -44,7 +44,7 @@ function SignupFormModal() {
   return (
     <div className="modal-container">
       <div className="close-modal-button-container" onClick={closeModal}>
-        <i class="fa-solid fa-x"></i>
+        <i className="fa-solid fa-x"></i>
       </div>
       <div className="modal-form-container">
         <h1 className="modal-form-title">Sign Up</h1>

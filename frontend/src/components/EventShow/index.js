@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getEventThunk } from "../../store/events";
+import { clearEventState, getEventThunk } from "../../store/events";
 import { deleteEventThunk } from "../../store/events";
 import { getGroupThunk } from "../../store/groups";
 import "./EventShow.css";
@@ -25,6 +25,13 @@ const EventShow = () => {
 
   useEffect(() => {
     dispatch(getEventThunk(eventId));
+
+    return (
+      () => {
+        dispatch(clearEventState())
+        setIsLoaded(false)
+      }
+    )
   }, [dispatch, eventId]);
 
   useEffect(() => {
@@ -33,6 +40,7 @@ const EventShow = () => {
 
   const handleEventDelete = async (e, eventId) => {
     e.preventDefault();
+    setIsLoaded(false)
     await dispatch(deleteEventThunk(eventId))
     history.push("/events");
   };
@@ -44,7 +52,7 @@ const EventShow = () => {
 
   return (
     <div>
-      {isLoaded && (
+      {isLoaded ? (
         <div className="event-show-container">
           <div className="event-show-header-container">
             <div className="event-show-title">{event.name}</div>
@@ -106,7 +114,7 @@ const EventShow = () => {
                 <div className="event-show-date">
                   <div className="event-show-date-logo">
                     <i
-                      class="fa-solid fa-clock"
+                      className="fa-solid fa-clock"
                       style={{ color: "#757575" }}
                     ></i>
                   </div>
@@ -117,7 +125,7 @@ const EventShow = () => {
                 <div className="event-show-address">
                   <div className="event-show-address-logo">
                     <i
-                      class="fa-solid fa-location-dot"
+                      className="fa-solid fa-location-dot"
                       style={{ color: "#757575" }}
                     ></i>
                   </div>
@@ -135,7 +143,7 @@ const EventShow = () => {
             </button>
           </div>
         </div>
-      )}
+      ) : <div style={{height:'1000px'}}></div>}
     </div>
   );
 };

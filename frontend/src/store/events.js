@@ -4,6 +4,7 @@ const LOAD_EVENTS = "events/LOAD_EVENTS";
 const ADD_EVENT = "events/ADD_EVENT";
 const GET_EVENT = "events/GET_EVENT";
 const DELETE_EVENT = "event/DELETE_EVENT";
+const CLEAR_EVENT_STATE = 'events/CLEAR_EVENT_STATE'
 
 export const setEvents = (events) => {
   return {
@@ -32,6 +33,12 @@ export const deleteEvent = (eventId) => {
     payload: eventId,
   };
 };
+
+export const clearEventState = () => {
+  return {
+    type: CLEAR_EVENT_STATE
+  }
+}
 
 // TODO - copy shitty feature where you can never access the 'add group' button because it keeps loading more events/groups
 export const loadEvents = () => async (dispatch) => {
@@ -89,8 +96,8 @@ const eventReducer = (state = initialState, action) => {
       return newState;
     case ADD_EVENT:
       newState = {...state,
-      allEvents: {...state.allEvents, [action.payload.id]: action.payload},
-      singleEvent: {...state.singleEvent} // remove from single event
+      // allEvents: {...state.allEvents, [action.payload.id]: action.payload},
+      // singleEvent: {...state.singleEvent} // remove from single event
       }
       return newState
     case GET_EVENT:
@@ -100,6 +107,9 @@ const eventReducer = (state = initialState, action) => {
       newState = { ...state, allEvents: {...state.allEvents}, singleEvent: {} };
       delete newState.allEvents[action.payload];
       return newState;
+    case CLEAR_EVENT_STATE:
+      newState= {...initialState}
+      return newState
     default:
       return state;
   }

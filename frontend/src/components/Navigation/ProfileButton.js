@@ -49,9 +49,9 @@ function ProfileButton({ user }) {
           <div className="profileButton">{user.firstName[0].toUpperCase()}</div>
           <div>
             {showMenu ? (
-              <i class="fa-solid fa-angle-up"></i>
+              <i className="fa-solid fa-angle-up"></i>
             ) : (
-              <i class="fa-solid fa-angle-down"></i>
+              <i className="fa-solid fa-angle-down"></i>
             )}
           </div>
         </div>
@@ -93,52 +93,6 @@ function ProfileButton({ user }) {
       </div>
     );
   }
-
-  // <div className="profile-menu-dropdown">
-  //   <div className="profile-button-selection" onClick={openMenu}>
-  //     <div className="profileButton">
-  //       {user ? (
-  //         user.firstName[0].toUpperCase()
-  //       ) : (
-  //         <i className="fas fa-user-circle" />
-  //       )}
-  //     </div>
-  //     <div>
-  //       {showMenu ? (
-  //         <i class="fa-solid fa-angle-up"></i>
-  //       ) : (
-  //         <i class="fa-solid fa-angle-down"></i>
-  //       )}
-  //     </div>
-  //   </div>
-  //   <div className={ulClassName} ref={ulRef}>
-  //     {user ? (
-  //       <div className="profile-menu">
-  //         <div>{user.username}</div>
-  //         <div>
-  //           {user.firstName} {user.lastName}
-  //         </div>
-  //         <div>{user.email}</div>
-  //         <div>
-  //           <button onClick={logout}>Log Out</button>
-  //         </div>
-  //       </div>
-  //     ) : (
-  //       <div className="profile-menu">
-  //         <OpenModalMenuItem
-  //           itemText="Log In"
-  //           onItemClick={closeMenu}
-  //           modalComponent={<LoginFormModal />}
-  //         />
-  //         <OpenModalMenuItem
-  //           itemText="Sign Up"
-  //           onItemClick={closeMenu}
-  //           modalComponent={<SignupFormModal />}
-  //         />
-  //       </div>
-  //     )}
-  //   </div>
-  // </div>
 }
 
 export default ProfileButton;

@@ -5,6 +5,7 @@ const ADD_GROUP = "groups/ADD_GROUP";
 const EDIT_GROUP = "group/EDIT_GROUP";
 const GET_GROUP = "/groups/GET_GROUP";
 const DELETE_GROUP = "groups/DELETE_GROUP";
+const CLEAR_GROUP_STATE = "groups/CLEAR_GROUP_STATE"
 
 export const setGroups = (groups) => {
   return {
@@ -40,6 +41,12 @@ export const deleteGroup = (groupId) => {
     payload: groupId,
   };
 };
+
+export const clearGroupState = () => {
+  return {
+    type: CLEAR_GROUP_STATE
+  }
+}
 
 // TODO - copy shitty feature where you can never access the 'add group' button because it keeps loading more events/groups
 export const loadGroups = () => async (dispatch) => {
@@ -123,8 +130,8 @@ const groupReducer = (state = initialState, action) => {
     case ADD_GROUP:
       newState = {
         ...state,
-        allGroups: { ...state.allGroups, [action.payload.id]: action.payload },
-        singleGroup: { ...state.singleGroup }, // dont change single group
+        // allGroups: { ...state.allGroups},
+        // singleGroup: { ...state.singleGroup }, // dont change single group
       };
       return newState;
     case EDIT_GROUP:
@@ -147,6 +154,9 @@ const groupReducer = (state = initialState, action) => {
       newState = { ...state, allGroups: {...state.allGroups} };
       delete newState.allGroups[action.payload];
       return newState;
+    case CLEAR_GROUP_STATE:
+      newState = {...initialState}
+      return newState
     default:
       return state;
   }

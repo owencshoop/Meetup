@@ -15,6 +15,7 @@ function CreateEventFormModal({ group }) {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [url, setUrl] = useState('')
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory();
@@ -34,7 +35,8 @@ function CreateEventFormModal({ group }) {
           startDate,
           endDate,
         },
-        group.id
+        group.id,
+        url
       )
     )
       .then((data) => history.push(`/events/${data.id}`))
@@ -48,7 +50,7 @@ function CreateEventFormModal({ group }) {
   return (
     <div className="modal-container">
       <div className="close-modal-button-container" onClick={closeModal}>
-        <i class="fa-solid fa-x"></i>
+        <i className="fa-solid fa-x"></i>
       </div>
       <div className="modal-form-container">
         <h1 className="modal-form-title">Create an Event</h1>
@@ -128,6 +130,14 @@ function CreateEventFormModal({ group }) {
             value={price}
             required
           />
+          <label htmlFor="url" className="form-input-item-label">Image URL:</label>
+          <input
+            className="form-input-item"
+            id="url"
+            type="url"
+            onChange={(e) => setUrl(e.target.value)}
+            value={url}
+            />
           <label htmlFor="startDate" className="form-input-item-label">Start Date:</label>
           <input
             className="form-input-item"
