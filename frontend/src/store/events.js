@@ -50,7 +50,7 @@ export const loadEvents = () => async (dispatch) => {
   }
 };
 
-export const addEventThunk = (event, groupId) => async (dispatch) => {
+export const addEventThunk = (event, groupId, url) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}/events`, {
     method: 'POST',
     headers: {
@@ -59,9 +59,18 @@ export const addEventThunk = (event, groupId) => async (dispatch) => {
     body: JSON.stringify(event)
   });
   if (response.ok) {
-    const data = await response.json()
-    dispatch(addEvent(data))
-    return data
+    const event = await response.json()
+    await dispatch(addEvent(event))
+    const imageresponse = await csrfFetch(`/api/events/${event.id}/images`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({url: url, preview: true})
+    })
+    if (imageresponse.ok){
+      return event
+    }
   }
 };
 
@@ -101,7 +110,7 @@ const eventReducer = (state = initialState, action) => {
       }
       return newState
     case GET_EVENT:
-      newState = { ...state, allEvents: {...state.allEvents, [action.payload.id]: action.payload}, singleEvent: {...state.singleEvent, ...action.payload } };
+      newState = { ...state, allEvents: {...state.allEvents}, singleEvent: {...state.singleEvent, ...action.payload } };
       return newState;
     case DELETE_EVENT:
       newState = { ...state, allEvents: {...state.allEvents}, singleEvent: {} };

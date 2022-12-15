@@ -56,6 +56,7 @@
     text-overflow: ellipsis;
     text-decoration: none;
     color: #212121;
+    word-break: break-word;
 }
 
 .group-list-location {
@@ -69,6 +70,7 @@
 .group-description {
     text-overflow: ellipsis;
     color: rgb(117, 117, 117, 1);
+    word-break: break-word;
 }
 
 .group-members-private-container {
@@ -144,6 +146,7 @@
     color: rgb(33, 33, 33);
     /* margin-top: 4px; */
     margin-bottom: 4px;
+    word-break: break-word;
 }
 
 .event-list-group-location {

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 // import { deleteGroupThunk } from "../../store/groups";
 // import { deleteEventThunk } from "../../store/events";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./EventGroupList.css";
 
 const EventGroupList = ({ eventgroup }) => {

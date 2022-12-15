@@ -12,7 +12,10 @@ const BodyContainer = () => {
     const [eventGroup, setEventGroup] = useState(pathname.split('/')[1])
     const [isLoaded, setIsLoaded] = useState(false)
 
+
     useEffect(() => {
+        if (eventGroup !== pathname.split('/')[1]) setEventGroup(pathname.split('/')[1])
+
         dispatch(loadGroups())
         .then(res => dispatch(loadEvents()))
         .then(res => setIsLoaded(true))
@@ -24,7 +27,7 @@ const BodyContainer = () => {
                 setIsLoaded(false)
             }
         )
-    }, [dispatch, eventGroup])
+    }, [dispatch, eventGroup, pathname])
 
     return (
         <div className="body-div">

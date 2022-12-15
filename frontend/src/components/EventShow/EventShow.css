@@ -66,6 +66,7 @@
     /* border: 3px solid pink; */
     box-sizing: border-box;
     padding-bottom: 24px;
+    word-break: break-word;
 }
 
 .event-show-description-item {

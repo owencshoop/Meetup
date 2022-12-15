@@ -130,8 +130,8 @@ const EventShow = () => {
                     ></i>
                   </div>
                   <div className="event-show-address">
-                    {event.Venue?.address} {event.Venue?.city},{" "}
-                    {event.Venue?.state}
+                    {event.Venue ? ((event.Venue?.address) (event.Venue?.city) (", ")
+                    (event.Venue?.state)) : 'No location'}
                   </div>
                 </div>
               </div>
