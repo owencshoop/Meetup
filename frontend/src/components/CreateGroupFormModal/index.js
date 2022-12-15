@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { addGroupThunk } from "../../store/groups";
-import './CreateGroupFormModal.css'
+import "./CreateGroupFormModal.css";
 
 function CreateGroupModalForm() {
   const dispatch = useDispatch();
@@ -13,27 +13,32 @@ function CreateGroupModalForm() {
   const [_private, setPrivate] = useState(false);
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [url, setUrl] = useState("");
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
-  const history = useHistory()
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors([]);
     return dispatch(
-      addGroupThunk({
-        name,
-        about,
-        type,
-        private: _private,
-        city,
-        state,
-      })
+      addGroupThunk(
+        {
+          name,
+          about,
+          type,
+          private: _private,
+          city,
+          state,
+        },
+        url
+      )
     )
-      .then(data => history.push(`/groups/${data.id}`))
+      .then((data) => history.push(`/groups/${data.id}`))
       .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
+      .catch(async (err) => {
+        console.log(err)
+        const data = await err.json();
         if (data && data.errors) setErrors(Object.values(data.errors));
       });
   };
@@ -50,7 +55,9 @@ function CreateGroupModalForm() {
         }}
       >
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
         </ul>
         <label>
           Name:
@@ -80,19 +87,19 @@ function CreateGroupModalForm() {
           <option value="In person">In person</option>
           <option value="Online">Online</option>
         </select>
-        <label htmlFor='private'>
+        <label htmlFor="private">
           Private?
-        <input
-          type='checkbox'
-          id='private'
-          name='private'
-          value={_private}
-          checked={_private ? 'checked' : ''}
-          onChange={(e) => {
-            setPrivate(!_private)
+          <input
+            type="checkbox"
+            id="private"
+            name="private"
+            value={_private}
+            checked={_private ? "checked" : ""}
+            onChange={(e) => {
+              setPrivate(!_private);
             }}
           />
-          </label>
+        </label>
 
         <label htmlFor="city">
           City:
@@ -112,6 +119,15 @@ function CreateGroupModalForm() {
             onChange={(e) => setState(e.target.value)}
             value={state}
             required
+          />
+        </label>
+        <label htmlFor="url">
+          Image URL:
+          <input
+            id="url"
+            type="url"
+            onChange={(e) => setUrl(e.target.value)}
+            value={url}
           />
         </label>
         <button type="submit">Create Group</button>
