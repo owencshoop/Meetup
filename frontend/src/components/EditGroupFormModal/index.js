@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { editGroupThunk } from "../../store/groups";
+import { editGroupThunk, getGroupThunk } from "../../store/groups";
 import './EditGroupFormModal.css'
 
 function EditGroupFormModal({ group }) {
@@ -31,6 +31,7 @@ function EditGroupFormModal({ group }) {
         group.id
       )
     )
+      .then((group) => dispatch(getGroupThunk(group.id)))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
