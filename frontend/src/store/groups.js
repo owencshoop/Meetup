@@ -51,7 +51,7 @@ export const loadGroups = () => async (dispatch) => {
   }
 };
 
-export const addGroupThunk = (group) => async (dispatch) => {
+export const addGroupThunk = (group, url) => async (dispatch) => {
   const response = await csrfFetch("/api/groups", {
     method: "POST",
     headers: {
@@ -60,9 +60,19 @@ export const addGroupThunk = (group) => async (dispatch) => {
     body: JSON.stringify(group),
   });
   if (response.ok) {
-    const data = await response.json();
-    dispatch(addGroup(data));
-    return data;
+    const group = await response.json();
+    await dispatch(addGroup(group));
+    const imageresponse = await csrfFetch(`/api/groups/${group.id}/images`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({url: url, preview: true})
+    })
+    if (imageresponse.ok) {
+      // dispatch(getGroupThunk(group.id))
+      return group;
+    }
   }
 };
 

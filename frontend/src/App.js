@@ -19,22 +19,24 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="app-div" style={{position: 'relative'}}>
+    <div className="app-div" style={{ position: "relative" }}>
       {/* <Navigation isLoaded={isLoaded} />
       <FooterContainer /> */}
       {isLoaded && (
         <Switch>
           <Route exact path="/">
             <Navigation isLoaded={isLoaded} />
-            <div>
-              Splash page is currently under construction. Thank you for your
-              patience!
-            </div>
-            <div>
-              <NavLink to="/groups">Groups</NavLink>
-            </div>
-            <div>
-              <NavLink to="/events">Events</NavLink>
+            <div className="splash-page-body">
+              <div>
+                Splash page is currently under construction. Thank you for your
+                patience!
+              </div>
+              <div>
+                <NavLink to="/groups">Groups</NavLink>
+              </div>
+              <div>
+                <NavLink to="/events">Events</NavLink>
+              </div>
             </div>
             {/* <FooterContainer /> */}
           </Route>
@@ -48,7 +50,7 @@ function App() {
             <GroupShow />
             <FooterContainer />
           </Route>
-          <Route path='/events/:eventId'>
+          <Route path="/events/:eventId">
             <Navigation isLoaded={isLoaded} />
             <EventShow />
             <FooterContainer />

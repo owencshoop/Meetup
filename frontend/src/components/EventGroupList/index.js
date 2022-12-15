@@ -102,7 +102,7 @@ const EventGroupList = ({ eventgroup }) => {
                   {event.numAttending > 1 ? "attendees" : "attendee"}
                 </div>
                 <div className="event-list-share-favorite-container">
-                  <i class="fa-solid fa-arrow-up-from-bracket"></i>{" "}
+                  <i className="fa-solid fa-arrow-up-from-bracket"></i>{" "}
                   {/* <i class="fa-regular fa-star"></i> */}
                 </div>
               </div>
