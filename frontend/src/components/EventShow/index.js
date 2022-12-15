@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getEventThunk } from "../../store/events";
+import { clearEventState, getEventThunk } from "../../store/events";
 import { deleteEventThunk } from "../../store/events";
 import { getGroupThunk } from "../../store/groups";
 import "./EventShow.css";
@@ -25,20 +25,34 @@ const EventShow = () => {
 
   useEffect(() => {
     dispatch(getEventThunk(eventId));
+
+    return (
+      () => {
+        dispatch(clearEventState())
+        setIsLoaded(false)
+      }
+    )
   }, [dispatch, eventId]);
 
   useEffect(() => {
     if (groupId) dispatch(getGroupThunk(groupId)).then(() => setIsLoaded(true));
   }, [dispatch, groupId]);
 
-  const handleEventDelete = (e, eventId) => {
+  const handleEventDelete = async (e, eventId) => {
     e.preventDefault();
-    dispatch(deleteEventThunk(eventId)).then(history.push("/events"));
+    setIsLoaded(false)
+    await dispatch(deleteEventThunk(eventId))
+    history.push("/events");
   };
+
+  const handleGroupOnClick = (e) => {
+    e.preventDefault()
+    history.push(`/groups/${group.id}`)
+  }
 
   return (
     <div>
-      {isLoaded && (
+      {isLoaded ? (
         <div className="event-show-container">
           <div className="event-show-header-container">
             <div className="event-show-title">{event.name}</div>
@@ -79,7 +93,7 @@ const EventShow = () => {
               </div>
             </div>
             <div className="event-show-body-right-container">
-              <div className="event-show-group-container">
+              <div className="event-show-group-container" onClick={handleGroupOnClick}>
                 <div className="event-show-group-image-container">
                   <img
                     className="event-show-group-image"
@@ -100,7 +114,7 @@ const EventShow = () => {
                 <div className="event-show-date">
                   <div className="event-show-date-logo">
                     <i
-                      class="fa-solid fa-clock"
+                      className="fa-solid fa-clock"
                       style={{ color: "#757575" }}
                     ></i>
                   </div>
@@ -111,13 +125,13 @@ const EventShow = () => {
                 <div className="event-show-address">
                   <div className="event-show-address-logo">
                     <i
-                      class="fa-solid fa-location-dot"
+                      className="fa-solid fa-location-dot"
                       style={{ color: "#757575" }}
                     ></i>
                   </div>
                   <div className="event-show-address">
-                    {event.Venue?.address} {event.Venue?.city},{" "}
-                    {event.Venue?.state}
+                    {event.Venue ? ((event.Venue?.address) (event.Venue?.city) (", ")
+                    (event.Venue?.state)) : 'No location'}
                   </div>
                 </div>
               </div>
@@ -129,7 +143,7 @@ const EventShow = () => {
             </button>
           </div>
         </div>
-      )}
+      ) : <div style={{height:'1000px'}}></div>}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getGroupThunk } from "../../store/groups";
+import { clearGroupState, getGroupThunk } from "../../store/groups";
 import { deleteGroupThunk } from "../../store/groups";
 import CreateEventFormModal from "../CreateEventFormModal";
 import EditGroupFormModal from "../EditGroupFormModal";
@@ -18,17 +18,25 @@ const GroupShow = () => {
 
   useEffect(() => {
     dispatch(getGroupThunk(groupId)).then(() => setIsLoaded(true));
+
+    return (
+      () => dispatch(clearGroupState())
+    )
   }, [dispatch, groupId]);
 
-  const handleGroupDelete = (e, groupId) => {
+  const handleGroupDelete = async (e, groupId) => {
     e.preventDefault();
-    dispatch(deleteGroupThunk(groupId));
-    history.push("/groups");
+    const response = await dispatch(deleteGroupThunk(groupId));
+    if (response.message === "Successfully deleted"){
+      history.push("/groups");
+    }else {
+      window.alert('Not authorized to delete')
+    }
   };
 
   return (
     <div className="group-show-container">
-      {isLoaded && (
+      {isLoaded ? (
         <>
           <div className="group-show-image-name-container">
             <div className="group-show-image-container">
@@ -47,7 +55,7 @@ const GroupShow = () => {
               <div className="group-show-location-members-organizer">
                 <div className="group-show-name-content">
                   <div className="group-show-name-icons">
-                    <i class="fa-solid fa-location-dot"></i>
+                    <i className="fa-solid fa-location-dot"></i>
                   </div>
                   <div>
                     {group.city}, {group.state}
@@ -55,7 +63,7 @@ const GroupShow = () => {
                 </div>
                 <div className="group-show-name-content">
                   <div className="group-show-name-icons">
-                    <i class="fa-solid fa-user-group"></i>
+                    <i className="fa-solid fa-user-group"></i>
                   </div>
                   <div>
                     {group.numMembers}{" "}
@@ -65,7 +73,7 @@ const GroupShow = () => {
                 </div>
                 <div className="group-show-name-content">
                   <div className="group-show-name-icons">
-                    <i class="fa-solid fa-user"></i>
+                    <i className="fa-solid fa-user"></i>
                   </div>
                   <div>
                     Organized by{" "}
@@ -109,7 +117,7 @@ const GroupShow = () => {
             </div>
           </div>
         </>
-      )}
+      ) : <div style={{height:'1000px'}}></div>}
     </div>
   );
 };

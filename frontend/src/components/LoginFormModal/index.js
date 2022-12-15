@@ -23,44 +23,53 @@ function LoginFormModal() {
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit} style={{display:'flex', flexDirection:'column'}}>
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Username or Email
+    <div className="modal-container">
+      <div className="close-modal-button-container" onClick={closeModal}>
+        <i className="fa-solid fa-x"></i>
+      </div>
+      <div className="modal-form-container">
+        <h1 className="modal-form-title">Log In</h1>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+          <label className="form-input-item-label">Username or Email</label>
           <input
+            className="form-input-item"
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
           />
-        </label>
-        <label>
-          Password
+          <label className="form-input-item-label">Password</label>
           <input
+            className="form-input-item"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        <button type="submit">Log In</button>
-        <button
-          type="submit"
-          onClick={(e) => {
-            setCredential("demo@user.io");
-            setPassword("password");
-          }}
-        >
-          Demo User Login
-        </button>
-      </form>
-    </>
+          <button type="submit" className="form-button">
+            Log In
+          </button>
+          <button
+            className="form-button"
+            type="submit"
+            onClick={(e) => {
+              setCredential("demo@user.io");
+              setPassword("password");
+            }}
+          >
+            Demo User Login
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

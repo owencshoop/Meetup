@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import { addEventThunk } from "../../store/events";
-import './CreateEventFormModal.css'
+import "./CreateEventFormModal.css";
 
 function CreateEventFormModal({ group }) {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ function CreateEventFormModal({ group }) {
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [url, setUrl] = useState('')
   const [errors, setErrors] = useState([]);
   const { closeModal } = useModal();
   const history = useHistory();
@@ -32,9 +33,10 @@ function CreateEventFormModal({ group }) {
           price,
           description,
           startDate,
-          endDate
+          endDate,
         },
-        group.id
+        group.id,
+        url
       )
     )
       .then((data) => history.push(`/events/${data.id}`))
@@ -46,44 +48,45 @@ function CreateEventFormModal({ group }) {
   };
 
   return (
-    <div style={{ border: "3px solid yellow" }}>
-      <h1>Create an Event</h1>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: "flex",
-          border: "2px solid red",
-          flexDirection: "column",
-        }}
-      >
-        <ul>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
-        </ul>
-        <label>
-          Name:
+    <div className="modal-container">
+      <div className="close-modal-button-container" onClick={closeModal}>
+        <i className="fa-solid fa-x"></i>
+      </div>
+      <div className="modal-form-container">
+        <h1 className="modal-form-title">Create an Event</h1>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <ul>
+            {errors.map((error, idx) => (
+              <li key={idx}>{error}</li>
+            ))}
+          </ul>
+          <label htmlFor="name" className="form-input-item-label">Name:</label>
           <input
+            className="form-input-item"
             id="name"
             type="text"
             onChange={(e) => setName(e.target.value)}
             value={name}
             required
           />
-        </label>
-        <label htmlFor="about">
-          Description:
+          <label htmlFor="about" className="form-input-item-label">Description:</label>
           <input
+            className="form-input-item"
             id="about"
             type="text"
             onChange={(e) => setDescription(e.target.value)}
             value={description}
             required
           />
-        </label>
-        <label htmlFor="type">
-          Type:
+          <label htmlFor="type" className="form-input-item-label">Type:</label>
           <select
+            className="form-input-item"
             name="type"
             onChange={(e) => setType(e.target.value)}
             value={type}
@@ -91,68 +94,71 @@ function CreateEventFormModal({ group }) {
             <option value="In person">In person</option>
             <option value="Online">Online</option>
           </select>
-        </label>
-        <label htmlFor="venueId">
-          Venue:
+          <label htmlFor="venueId" className="form-input-item-label">Venue:</label>
           <select
+            className="form-input-item"
             name="venueId"
             onChange={(e) => setVenueId(e.target.value)}
             value={venueId}
           >
-            <option selected disabled>
+            <option selected disabled className="form-input-item">
               Select a venue
             </option>
             {group.Venues?.map((venue) => {
               return (
-                <option value={`${venue.id}`}>
+                <option value={`${venue.id}`} className="form-input-item">
                   {venue.address}, {venue.city}, {venue.state}
                 </option>
               );
             })}
           </select>
-        </label>
-        <label htmlFor="city">
-          Capacity:
+          <label htmlFor="city" className="form-input-item-label">Capacity:</label>
           <input
+            className="form-input-item"
             id="city"
             type="text"
             onChange={(e) => setCapacity(e.target.value)}
             value={capacity}
             required
           />
-        </label>
-        <label htmlFor="state">
-          Price:
+          <label htmlFor="state" className="form-input-item-label">Price:</label>
           <input
+            className="form-input-item"
             id="state"
             type="text"
             onChange={(e) => setPrice(e.target.value)}
             value={price}
             required
           />
-        </label>
-        <label htmlFor="startDate">
-          Start Date:
+          <label htmlFor="url" className="form-input-item-label">Image URL:</label>
           <input
+            className="form-input-item"
+            id="url"
+            type="url"
+            onChange={(e) => setUrl(e.target.value)}
+            value={url}
+            />
+          <label htmlFor="startDate" className="form-input-item-label">Start Date:</label>
+          <input
+            className="form-input-item"
             id="startDate"
             type="datetime-local"
             onChange={(e) => setStartDate(e.target.value)}
             value={startDate}
             required
           />
-        </label>
-        <label htmlFor="endDate">
-          End Date:
+          <label htmlFor="endDate" className="form-input-item-label">End Date:</label>
           <input
+            className="form-input-item"
             id="endDate"
             type="datetime-local"
             onChange={(e) => setEndDate(e.target.value)}
             value={endDate}
             required
           />
-        </label>
-        <button type="submit">Create Event</button>
-      </form>
+          <button type="submit"  className="form-button">Create Event</button>
+        </form>
+      </div>
     </div>
   );
 }

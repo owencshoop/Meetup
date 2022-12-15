@@ -4,6 +4,7 @@ const LOAD_EVENTS = "events/LOAD_EVENTS";
 const ADD_EVENT = "events/ADD_EVENT";
 const GET_EVENT = "events/GET_EVENT";
 const DELETE_EVENT = "event/DELETE_EVENT";
+const CLEAR_EVENT_STATE = 'events/CLEAR_EVENT_STATE'
 
 export const setEvents = (events) => {
   return {
@@ -33,6 +34,12 @@ export const deleteEvent = (eventId) => {
   };
 };
 
+export const clearEventState = () => {
+  return {
+    type: CLEAR_EVENT_STATE
+  }
+}
+
 // TODO - copy shitty feature where you can never access the 'add group' button because it keeps loading more events/groups
 export const loadEvents = () => async (dispatch) => {
   const response = await csrfFetch("/api/events");
@@ -43,7 +50,7 @@ export const loadEvents = () => async (dispatch) => {
   }
 };
 
-export const addEventThunk = (event, groupId) => async (dispatch) => {
+export const addEventThunk = (event, groupId, url) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}/events`, {
     method: 'POST',
     headers: {
@@ -52,9 +59,18 @@ export const addEventThunk = (event, groupId) => async (dispatch) => {
     body: JSON.stringify(event)
   });
   if (response.ok) {
-    const data = await response.json()
-    dispatch(addEvent(data))
-    return data
+    const event = await response.json()
+    await dispatch(addEvent(event))
+    const imageresponse = await csrfFetch(`/api/events/${event.id}/images`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({url: url, preview: true})
+    })
+    if (imageresponse.ok){
+      return event
+    }
   }
 };
 
@@ -89,17 +105,20 @@ const eventReducer = (state = initialState, action) => {
       return newState;
     case ADD_EVENT:
       newState = {...state,
-      allEvents: {...state.allEvents, [action.payload.id]: action.payload},
-      singleEvent: {...state.singleEvent} // remove from single event
+      // allEvents: {...state.allEvents, [action.payload.id]: action.payload},
+      // singleEvent: {...state.singleEvent} // remove from single event
       }
       return newState
     case GET_EVENT:
-      newState = { ...state, allEvents: {...state.allEvents, [action.payload.id]: action.payload}, singleEvent: {...state.singleEvent, ...action.payload } };
+      newState = { ...state, allEvents: {...state.allEvents}, singleEvent: {...state.singleEvent, ...action.payload } };
       return newState;
     case DELETE_EVENT:
       newState = { ...state, allEvents: {...state.allEvents}, singleEvent: {} };
       delete newState.allEvents[action.payload];
       return newState;
+    case CLEAR_EVENT_STATE:
+      newState= {...initialState}
+      return newState
     default:
       return state;
   }
