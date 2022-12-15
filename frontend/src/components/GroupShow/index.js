@@ -20,10 +20,14 @@ const GroupShow = () => {
     dispatch(getGroupThunk(groupId)).then(() => setIsLoaded(true));
   }, [dispatch, groupId]);
 
-  const handleGroupDelete = (e, groupId) => {
+  const handleGroupDelete = async (e, groupId) => {
     e.preventDefault();
-    dispatch(deleteGroupThunk(groupId));
-    history.push("/groups");
+    const response = await dispatch(deleteGroupThunk(groupId));
+    if (response.message === "Successfully deleted"){
+      history.push("/groups");
+    }else {
+      window.alert('Not authorized to delete')
+    }
   };
 
   return (

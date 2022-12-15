@@ -1,13 +1,16 @@
+/* filler */
 #modal-content {
     border-radius: 8px;
+    overflow: auto;
+    max-height: 80%;
 }
 
 .modal-container {
-    /* border: 3px solid red; */
     padding: 20px 40px;
     box-sizing: border-box;
     width: 440px;
     border-radius: 8px;
+    overflow: hidden;
 }
 
 .close-modal-button-container {

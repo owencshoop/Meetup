@@ -31,9 +31,10 @@ const EventShow = () => {
     if (groupId) dispatch(getGroupThunk(groupId)).then(() => setIsLoaded(true));
   }, [dispatch, groupId]);
 
-  const handleEventDelete = (e, eventId) => {
+  const handleEventDelete = async (e, eventId) => {
     e.preventDefault();
-    dispatch(deleteEventThunk(eventId)).then(history.push("/events"));
+    await dispatch(deleteEventThunk(eventId))
+    history.push("/events");
   };
 
   const handleGroupOnClick = (e) => {

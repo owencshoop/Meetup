@@ -14,6 +14,8 @@ const BodyContainer = () => {
     useEffect(() => {
         dispatch(loadGroups())
         dispatch(loadEvents())
+
+        return // TODO -- dispatch action to clear state
     }, [dispatch, eventGroup])
 
     return (
