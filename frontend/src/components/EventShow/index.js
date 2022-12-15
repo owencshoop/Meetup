@@ -15,23 +15,33 @@ const EventShow = () => {
   const group = useSelector((state) => state.groups.singleGroup);
   const history = useHistory();
 
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-  const startDate = new Date(event.startDate)
-  const startDay = startDate.toLocaleDateString(undefined, options)
-  const startTime = startDate.toLocaleTimeString('en-Us')
-  const endDate = new Date(event.endDate)
-  const endDay = endDate.toLocaleDateString(undefined, options)
-  const endTime = endDate.toLocaleTimeString('en-US')
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const startDate = new Date(event.startDate);
+  const startDay = startDate.toLocaleDateString(undefined, options);
+  const startTime = startDate.toLocaleTimeString("en-Us");
+  const endDate = new Date(event.endDate);
+  const endDay = endDate.toLocaleDateString(undefined, options);
+  const endTime = endDate.toLocaleTimeString("en-US");
+
+  let eventAddress;
+  if (event.Venue) {
+    eventAddress = `${event.Venue?.address} ${event.Venue?.city}, ${event.Venue?.state}`;
+  } else {
+    eventAddress = "No location";
+  }
 
   useEffect(() => {
     dispatch(getEventThunk(eventId));
 
-    return (
-      () => {
-        dispatch(clearEventState())
-        setIsLoaded(false)
-      }
-    )
+    return () => {
+      dispatch(clearEventState());
+      setIsLoaded(false);
+    };
   }, [dispatch, eventId]);
 
   useEffect(() => {
@@ -40,15 +50,15 @@ const EventShow = () => {
 
   const handleEventDelete = async (e, eventId) => {
     e.preventDefault();
-    setIsLoaded(false)
-    await dispatch(deleteEventThunk(eventId))
+    setIsLoaded(false);
+    await dispatch(deleteEventThunk(eventId));
     history.push("/events");
   };
 
   const handleGroupOnClick = (e) => {
-    e.preventDefault()
-    history.push(`/groups/${group.id}`)
-  }
+    e.preventDefault();
+    history.push(`/groups/${group.id}`);
+  };
 
   return (
     <div>
@@ -93,7 +103,10 @@ const EventShow = () => {
               </div>
             </div>
             <div className="event-show-body-right-container">
-              <div className="event-show-group-container" onClick={handleGroupOnClick}>
+              <div
+                className="event-show-group-container"
+                onClick={handleGroupOnClick}
+              >
                 <div className="event-show-group-image-container">
                   <img
                     className="event-show-group-image"
@@ -129,10 +142,7 @@ const EventShow = () => {
                       style={{ color: "#757575" }}
                     ></i>
                   </div>
-                  <div className="event-show-address">
-                    {event.Venue ? ((event.Venue?.address) (event.Venue?.city) (", ")
-                    (event.Venue?.state)) : 'No location'}
-                  </div>
+                  <div className="event-show-address">{eventAddress}</div>
                 </div>
               </div>
             </div>
@@ -143,7 +153,9 @@ const EventShow = () => {
             </button>
           </div>
         </div>
-      ) : <div style={{height:'1000px'}}></div>}
+      ) : (
+        <div style={{ height: "1000px" }}></div>
+      )}
     </div>
   );
 };

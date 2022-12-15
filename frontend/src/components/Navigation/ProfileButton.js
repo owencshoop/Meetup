@@ -35,9 +35,9 @@ function ProfileButton({ user }) {
 
   const logout = async (e) => {
     e.preventDefault();
-    await dispatch(sessionActions.logout());
-    closeMenu();
-    history.pushState('/')
+    await dispatch(sessionActions.logout())
+    .then(res => closeMenu())
+    .then(history.push('/'))
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

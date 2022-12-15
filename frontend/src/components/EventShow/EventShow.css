@@ -98,14 +98,15 @@
     /* border: 3px solid red; */
     width: 54px;
     height: 54px;
-    overflow: hidden;
-    object-fit: fill;
     border-radius: 5px;
 }
 
 .event-show-group-image {
-    object-fit: fill;
     overflow: hidden;
+    object-fit: fill;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
 }
 
 .event-show-group-info-container {
