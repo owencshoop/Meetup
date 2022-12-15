@@ -89,6 +89,10 @@
     margin-bottom: 24px;
 }
 
+.event-show-group-container:hover {
+    cursor: pointer
+}
+
 .event-show-group-image-container {
     /* border: 3px solid red; */
     width: 54px;

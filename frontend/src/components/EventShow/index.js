@@ -36,6 +36,11 @@ const EventShow = () => {
     dispatch(deleteEventThunk(eventId)).then(history.push("/events"));
   };
 
+  const handleGroupOnClick = (e) => {
+    e.preventDefault()
+    history.push(`/groups/${group.id}`)
+  }
+
   return (
     <div>
       {isLoaded && (
@@ -79,7 +84,7 @@ const EventShow = () => {
               </div>
             </div>
             <div className="event-show-body-right-container">
-              <div className="event-show-group-container">
+              <div className="event-show-group-container" onClick={handleGroupOnClick}>
                 <div className="event-show-group-image-container">
                   <img
                     className="event-show-group-image"
