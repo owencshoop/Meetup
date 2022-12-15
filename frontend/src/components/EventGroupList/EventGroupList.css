@@ -3,6 +3,7 @@
     /* border: 2px solid green; */
     width: 100%;
     box-sizing: border-box;
+    
 }
 
 .group-list-item {
@@ -37,7 +38,7 @@
 .group-list-content-container {
     /* border: 3px solid goldenrod; */
     box-sizing: border-box;
-    min-width: 427px;
+    width: 427px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -50,7 +51,7 @@
     font: expanded;
     text-overflow: ellipsis;
     text-decoration: none;
-    color: black
+    color: #212121;
 }
 
 .group-list-location {
@@ -74,9 +75,8 @@
 }
 
 .events-list-container {
-    width: 571px;
+    width: 100%;
     box-sizing: border-box;
-    /* border: 3px solid palevioletred; */
 }
 
 .event-list-item {
@@ -84,39 +84,45 @@
     margin: 0 auto;
     box-sizing: border-box;
     display: flex;
+    flex-direction: row;
     justify-content: left;
-    padding-top: 14px;
+    padding-top: 10px;
     padding-bottom: 10px;
-    min-height: 162px;
+    height: 178px;
 }
 
 .event-list-image-container {
     box-sizing: border-box;
-    min-width: 156.48px;
-    height: 88.11px;
+    min-width: 178px;
+    height: 100px;
     margin-right: 10px;
+    /* object-fit: fill; */
     overflow: hidden;
 }
 
 .event-list-image {
     object-fit: fill;
-    height: 88.11px;
-    width: 156.48px;
+    height: 100px;
+    width: 178px;
     border-radius: 5px;
 }
 
 .event-list-content-container {
     /* border: 3px solid goldenrod; */
     box-sizing: border-box;
-    min-width: 395px;
-    /* display: flex;
+    width: 427px;
+    display: flex;
     flex-direction: column;
-    justify-content: space-between; */
+    justify-content: space-between;
 }
+
+/* .event-list-content-top {
+
+} */
 
 .event-list-start-date {
     margin: 0;
-    font-weight: 500;
+    font-weight: 650;
     font-size: medium;
     color: rgb(135, 116, 87, .8);
     text-transform: uppercase;
@@ -126,26 +132,28 @@
 
 .event-list-name {
     margin: 0;
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 650;
+    font-size: 23px;
     font: expanded;
     text-overflow: ellipsis;
     text-decoration: none;
     color: rgb(33, 33, 33);
-    margin-top: 4px;
+    /* margin-top: 4px; */
     margin-bottom: 4px;
 }
 
 .event-list-group-location {
     text-overflow: ellipsis;
     color: rgb(117, 117, 117, 1);
-    font-size: 14px;
+    margin: 0;
+    font-size: medium;
 }
 
 .event-list-attending-share-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 33px;
+    color: rgb(117, 117, 117, 1)
+    /* margin-top: 33px; */
 }
 
 .event-list-num-attending {

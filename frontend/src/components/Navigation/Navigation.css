@@ -24,15 +24,92 @@
 
 .profileButton {
     position: relative;
-    border-radius: 50px;
-    right: 0;
+    border-radius: 50%;
+    /* right: 0; */
+    background-color: rgb(151, 202, 209);
+    width: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-dropdown {
     position: absolute;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    right: 0;
-    top: 40px;
+    right: 10px;
+    top: 65px;
     min-width: 190px;
     background-color: white;
+    border: 1px solid lightgray;
+    padding: 8px;
+}
+
+.navigation-logo {
+    color: rgb(224, 70, 70);
+    font-family:cursive;
+    text-decoration: none;
+}
+
+.profileButton {
+    font-size: x-large;
+}
+
+.navigation-right-container {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    align-items: center;
+}
+
+.create-group-modal-button {
+    color: rgb(0, 130, 148);
+    font-size: medium;
+    font-weight: 500;
+}
+
+.create-group-modal-button:hover {
+    cursor: pointer;
+}
+
+.profile-button-selection {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.logout-profile-menu {
+    display: flex;
+    /* border: 2px solid red; */
+    gap: 20px
+}
+
+.login-signup-buttons {
+    /* border: 1px solid gray; */
+    color: rgb(33, 33, 33);
+    font-size: medium;
+    font-weight: 600;
+}
+
+.login-signup-buttons:hover {
+    color: rgb(0, 130, 148);
+    cursor: pointer;
+}
+
+.profile-menu-group-event {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    gap: 2px;
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+}
+
+.profile-menu-button {
+    text-decoration: none;
+    color: rgb(33, 33, 33);
+}
+
+.profile-menu-button:hover {
+    color: rgb(0, 130, 148)
 }

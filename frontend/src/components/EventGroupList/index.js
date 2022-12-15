@@ -54,7 +54,7 @@ const EventGroupList = ({ eventgroup }) => {
             <div className="group-members-private-container">
               <div>
                 {group.numMembers} {group.numMembers > 1 ? "members" : "member"}{" "}
-                . {group.private ? "Private" : "Public"}
+                • {group.private ? "Private" : "Public"}
               </div>
               <div>
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
@@ -67,11 +67,17 @@ const EventGroupList = ({ eventgroup }) => {
     });
   } else if (eventgroup === "events") {
     content = eventList.map((event) => {
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      };
+      const startDate = new Date(event.startDate);
+      const startDay = startDate.toLocaleDateString(undefined, options);
+      const startTime = startDate.toLocaleTimeString("en-Us");
       return (
-        <div
-          key={event.id}
-          className="event-list-item"
-        >
+        <div key={event.id} className="event-list-item">
           <div className="event-list-image-container">
             <img
               className="event-list-image"
@@ -80,14 +86,16 @@ const EventGroupList = ({ eventgroup }) => {
             ></img>
           </div>
           <div className="event-list-content-container">
-            <div className="event-list-start-date">{event.startDate}</div>
-            <h2 className="event-list-name">
-              <Link className="event-list-name" to={`/events/${event.id}`}>
-                {event.name}
-              </Link>
-            </h2>
-            <div className="event-list-group-location">
-              {event.Group?.name} · {event.Group?.city}, {event.Group?.state}
+            <div className="event-list-content-top">
+              <div className="event-list-start-date">{startDay} • {startTime}</div>
+              <h2 className="event-list-name">
+                <Link className="event-list-name" to={`/events/${event.id}`}>
+                  {event.name}
+                </Link>
+              </h2>
+              <div className="event-list-group-location">
+                {event.Group?.name} · {event.Group?.city}, {event.Group?.state}
+              </div>
             </div>
             <div className="event-list-attending-share-container">
               <div className="event-list-num-attending">
@@ -95,9 +103,8 @@ const EventGroupList = ({ eventgroup }) => {
                 {event.numAttending > 1 ? "attendees" : "attendee"}
               </div>
               <div className="event-list-share-favorite-container">
-                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                {' '}
-                <i class="fa-regular fa-star"></i>
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>{" "}
+                {/* <i class="fa-regular fa-star"></i> */}
               </div>
             </div>
           </div>
