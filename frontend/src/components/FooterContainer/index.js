@@ -6,7 +6,7 @@ const FooterContainer = () => {
   return (
     <div className="footer-container">
       <OpenCreateGroupModal
-        itemText="Create a Group"
+        itemText="Start a new group"
         modalComponent={<CreateGroupModalForm />}
       />
     </div>

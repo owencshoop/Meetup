@@ -16,7 +16,7 @@ function OpenCreateGroupModal({
   };
 
   return (
-    <button onClick={onClick} style={{border:'5px solid teal'}}>{itemText}</button>
+    <div className='create-group-modal-button' onClick={onClick}>{itemText}</div>
   );
 }
 
