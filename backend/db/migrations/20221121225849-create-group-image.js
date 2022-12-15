@@ -21,7 +21,7 @@ module.exports = {
         references: {model: 'Groups'}
       },
       url: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       preview: {
