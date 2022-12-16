@@ -37,7 +37,7 @@ function CreateGroupModalForm() {
       .then((data) => history.push(`/groups/${data.id}`))
       .then(closeModal)
       .catch(async (err) => {
-        console.log(err);
+        // console.log(err);
         const data = await err.json();
         if (data && data.errors) setErrors(Object.values(data.errors));
       });
