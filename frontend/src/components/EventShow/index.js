@@ -151,7 +151,7 @@ const EventShow = () => {
             </div>
           </div>
           {authorized && <div className="delete-event-button">
-            <button onClick={(e) => handleEventDelete(e, event.id)}>
+            <button onClick={(e) => handleEventDelete(e, event.id)} className='group-show-button'>
               Delete Event
             </button>
           </div>}

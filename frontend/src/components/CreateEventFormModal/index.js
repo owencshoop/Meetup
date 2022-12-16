@@ -112,20 +112,20 @@ function CreateEventFormModal({ group }) {
               );
             })}
           </select>
-          <label htmlFor="city" className="form-input-item-label">Capacity:</label>
+          <label htmlFor="capacity" className="form-input-item-label">Capacity:</label>
           <input
             className="form-input-item"
-            id="city"
-            type="text"
+            id="capacity"
+            type="number"
             onChange={(e) => setCapacity(e.target.value)}
             value={capacity}
             required
           />
-          <label htmlFor="state" className="form-input-item-label">Price:</label>
+          <label htmlFor="price" className="form-input-item-label">Price:</label>
           <input
             className="form-input-item"
-            id="state"
-            type="text"
+            id="price"
+            type="number"
             onChange={(e) => setPrice(e.target.value)}
             value={price}
             required

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import BodyContainer from "./components/BodyContainer";
 import FooterContainer from "./components/FooterContainer";
-import { NavLink, Route } from "react-router-dom";
+import { NavLink, Route, useHistory } from "react-router-dom";
 import { Switch } from "react-router-dom";
 import GroupShow from "./components/GroupShow";
 import EventShow from "./components/EventShow";
@@ -13,9 +13,12 @@ import EventShow from "./components/EventShow";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector((state) => state.session.user);
+  const history = useHistory();
 
   useEffect(() => {
-    dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
+    dispatch(sessionActions.restoreUser())
+      .then(() => setIsLoaded(true));
   }, [dispatch]);
 
   return (
@@ -26,6 +29,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Navigation isLoaded={isLoaded} />
+            {(user) ? history.push('/groups') : ''}
             <div className="splash-page-body">
               <div>
                 Splash page is currently under construction. Thank you for your

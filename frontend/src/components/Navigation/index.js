@@ -12,7 +12,7 @@ function Navigation({ isLoaded }) {
   return (
     <nav className="navdiv">
       <div>
-        <NavLink className="navigation-logo" exact to="/">
+        <NavLink className="navigation-logo" exact to={sessionUser ? '/groups' : '/'}>
           down2meet
         </NavLink>
       </div>

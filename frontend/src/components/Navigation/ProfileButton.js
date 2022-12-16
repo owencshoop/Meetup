@@ -10,7 +10,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
-  const history = useHistory()
+  const history = useHistory();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -36,8 +36,8 @@ function ProfileButton({ user }) {
   const logout = async (e) => {
     e.preventDefault();
     await dispatch(sessionActions.logout())
-    .then(res => closeMenu())
-    .then(history.push('/'))
+      .then((res) => closeMenu())
+      .then(history.push("/"));
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -65,13 +65,29 @@ function ProfileButton({ user }) {
             </NavLink>
           </div>
           <div className="profile-menu">
-            <div>username: {user.username}</div>
-            <div>
-              name: {user.firstName} {user.lastName}
+            <div className="user-info-container">
+              <div className="user-info-title">User Info</div>
+              <div className="user-info-content-container">
+                <div>username:</div>
+                <div>{user.username}</div>
+              </div>
+              <div className="user-info-content-container">
+                <div>
+                  name:
+                </div>
+                <div>
+                  {user.firstName} {user.lastName}
+                </div>
+              </div>
+              <div className="user-info-content-container">
+                <div>email:</div>
+                <div>{user.email}</div>
+              </div>
             </div>
-            <div>email: {user.email}</div>
-            <div>
-              <button onClick={logout}>Log Out</button>
+            <div className="logout-button-container">
+              <button className="logout-button" onClick={logout}>
+                Log Out
+              </button>
             </div>
           </div>
         </div>

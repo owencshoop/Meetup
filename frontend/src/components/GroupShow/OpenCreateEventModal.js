@@ -16,7 +16,7 @@ function OpenCreateEventFormModal({
   };
 
   return (
-    <button onClick={onClick}>{itemText}</button>
+    <button onClick={onClick} className='group-show-button'>{itemText}</button>
   );
 }
 
