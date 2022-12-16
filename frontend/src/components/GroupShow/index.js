@@ -16,7 +16,7 @@ const GroupShow = () => {
   const group = useSelector((state) => state.groups.singleGroup);
   const history = useHistory();
   const user = useSelector((state) => state.session.user)
-  const authorized = user.id === group.organizerId
+  const authorized = user?.id === group?.organizerId
 
   useEffect(() => {
     dispatch(getGroupThunk(groupId)).then(() => setIsLoaded(true));
