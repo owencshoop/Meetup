@@ -15,6 +15,8 @@ const GroupShow = () => {
   const { groupId } = useParams();
   const group = useSelector((state) => state.groups.singleGroup);
   const history = useHistory();
+  const user = useSelector((state) => state.session.user)
+  const authorized = user.id === group.organizerId
 
   useEffect(() => {
     dispatch(getGroupThunk(groupId)).then(() => setIsLoaded(true));
@@ -43,7 +45,7 @@ const GroupShow = () => {
               <img
                 className="group-show-image"
                 src={
-                  group.GroupImages.length > 0
+                  group.GroupImages?.length > 0
                     ? `${group.GroupImages[0].url}`
                     : ""
                 }
@@ -78,7 +80,7 @@ const GroupShow = () => {
                   <div>
                     Organized by{" "}
                     <span className="group-show-name-organizer">
-                      {group.Organizer.firstName} {group.Organizer.lastName}
+                      {group.Organizer?.firstName} {group.Organizer?.lastName}
                     </span>
                   </div>
                 </div>
@@ -94,13 +96,13 @@ const GroupShow = () => {
               <div className="group-show-organizer-container">
                 <h3>Organizers</h3>
                 <div>
-                  {group.Organizer.firstName} {group.Organizer.lastName}
+                  {group.Organizer?.firstName} {group.Organizer?.lastName}
                 </div>
               </div>
             </div>
           </div>
-          <div className="group-show-button-container">
-            <button onClick={(e) => handleGroupDelete(e, group.id)}>
+          {authorized && <div className="group-show-button-container">
+             <button onClick={(e) => handleGroupDelete(e, group.id)}>
               Delete Group
             </button>
             <div>
@@ -115,7 +117,7 @@ const GroupShow = () => {
                 modalComponent={<CreateEventFormModal group={group} />}
               />
             </div>
-          </div>
+          </div>}
         </>
       ) : <div style={{height:'1000px'}}></div>}
     </div>
