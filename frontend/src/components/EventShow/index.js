@@ -14,6 +14,7 @@ const EventShow = () => {
   const groupId = event.Group?.id;
   const group = useSelector((state) => state.groups.singleGroup);
   const history = useHistory();
+  const user = useSelector((state) => state.session.user)
 
   const options = {
     weekday: "long",
@@ -27,6 +28,8 @@ const EventShow = () => {
   const endDate = new Date(event.endDate);
   const endDay = endDate.toLocaleDateString(undefined, options);
   const endTime = endDate.toLocaleTimeString("en-US");
+
+  const authorized = user.id === group.organizerId
 
   let eventAddress;
   if (event.Venue) {
@@ -69,8 +72,8 @@ const EventShow = () => {
             <div className="event-show-header-organizer">
               Hosted By
               <p id="event-show-organizer">
-                {group.Organizer.firstName}{" "}
-                {group.Organizer.lastName[0].toUpperCase()}.
+                {group.Organizer?.firstName}{" "}
+                {group.Organizer?.lastName[0].toUpperCase()}.
               </p>
             </div>
           </div>
@@ -147,11 +150,11 @@ const EventShow = () => {
               </div>
             </div>
           </div>
-          <div className="delete-event-button">
+          {authorized && <div className="delete-event-button">
             <button onClick={(e) => handleEventDelete(e, event.id)}>
               Delete Event
             </button>
-          </div>
+          </div>}
         </div>
       ) : (
         <div style={{ height: "1000px" }}></div>
