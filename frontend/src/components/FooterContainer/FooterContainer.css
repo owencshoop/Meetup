@@ -1,8 +1,34 @@
 .footer-container {
     background-color: rgb(33, 33, 33);
-    height: 100px;
+    height: 200px;
     margin-top: 10px auto;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.footer-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.footer-login-signup-button-container {
+    /* border: 3px solid red; */
+    display: flex;
+    width: 500px;
+    justify-content: space-around;
+}
+
+.footer-modal-button{
+    color: rgb(246 247 248);
+    font-size: 18px;
+    border: 2px solid rgb(246 247 248);
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.footer-modal-button:hover {
+    cursor: pointer;
+    color: rgb(0, 130, 148);
+    border-color: rgb(0, 130, 148);
 }

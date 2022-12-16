@@ -105,3 +105,18 @@
     width: 50%;
     margin: 20px auto;
 }
+
+.group-show-button {
+    background-color: #f65858;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-color: #f65858;
+    box-shadow: none;
+    /* margin-bottom: 15px; */
+}
+
+.group-show-button:hover {
+    background-color: #f38d8d;
+    border-color: #f38d8d;
+}

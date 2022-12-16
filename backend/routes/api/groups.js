@@ -172,7 +172,10 @@ const validateCreateGroup = [
     .isBoolean()
     .withMessage("Private must be a boolean"),
   check("city").exists({ checkFalsy: true }).withMessage("City is required"),
-  check("state").exists({ checkFalsy: true }).withMessage("State is required"),
+  check("state")
+    .exists({ checkFalsy: true })
+    .isLength({ min: 2, max: 2 })
+    .withMessage("State is required and must be 2 letters. (CA, NY, DE, etc.)"),
   handleValidationErrors,
 ];
 
@@ -234,7 +237,6 @@ router.post(
         [Op.and]: [{ id: groupId }, { organizerId: user.id }],
       },
     });
-
 
     if (!group) {
       const err = new Error("Group couldn't be found");
@@ -653,7 +655,6 @@ router.put("/:groupId/membership", requireAuth, async (req, res, next) => {
     return next(err);
   }
 
-
   let membership = await Membership.findOne({
     where: {
       userId,
@@ -722,12 +723,12 @@ router.get("/:groupId/members", async (req, res, next) => {
   user = user.toJSON();
 
   const groupId = req.params.groupId;
-  const group = await Group.findByPk(groupId)
-  if (!group){
-    const err = new Error("Group couldn't be found")
-    err.status = 404
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    const err = new Error("Group couldn't be found");
+    err.status = 404;
 
-    return next(err)
+    return next(err);
   }
 
   let organizerCoHost = false;
@@ -751,7 +752,7 @@ router.get("/:groupId/members", async (req, res, next) => {
 
   if (organizerGroup || groupCoHost) organizerCoHost = true;
 
-  let members
+  let members;
   if (organizerCoHost) {
     members = await User.findAll({
       attributes: ["id", "firstName", "lastName"],
@@ -779,49 +780,49 @@ router.get("/:groupId/members", async (req, res, next) => {
     });
   }
 
-  let Members = []
+  let Members = [];
 
-  for (let member of members){
-    member = member.toJSON()
+  for (let member of members) {
+    member = member.toJSON();
     let membership = await Membership.findOne({
-        where: {
-            userId: member.id,
-            groupId
-        },
-        raw: true
-    })
-    const status = membership.status
-    member.Membership = {status}
+      where: {
+        userId: member.id,
+        groupId,
+      },
+      raw: true,
+    });
+    const status = membership.status;
+    member.Membership = { status };
 
-    Members.push(member)
+    Members.push(member);
   }
 
   res.json({ Members });
 });
 
 // delete membership for a group with groupId
-router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
+router.delete("/:groupId/membership", requireAuth, async (req, res, next) => {
   let { user } = req;
   user = user.toJSON();
 
-  const {userId} = req.body
+  const { userId } = req.body;
 
-  const findUser = await User.findByPk(userId)
-  if (!findUser){
-    const err = new Error('validation Error')
-    err.status = 400
-    err.errors = {'userId': "User couldn't be found"}
+  const findUser = await User.findByPk(userId);
+  if (!findUser) {
+    const err = new Error("validation Error");
+    err.status = 400;
+    err.errors = { userId: "User couldn't be found" };
 
-    return next(err)
+    return next(err);
   }
 
   const groupId = req.params.groupId;
-  const group = await Group.findByPk(groupId)
-  if (!group){
-    const err = new Error("Group couldn't be found")
-    err.status = 404
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    const err = new Error("Group couldn't be found");
+    err.status = 404;
 
-    return next(err)
+    return next(err);
   }
 
   let organizerGroup = await Group.findOne({
@@ -834,40 +835,42 @@ router.delete('/:groupId/membership', requireAuth, async (req, res, next) => {
   const membership = await Membership.findOne({
     where: {
       groupId,
-      userId
-    }
-  })
-  if (!membership){
-    const err = new Error('Membership does not exist for this user')
-    err.status = 404
+      userId,
+    },
+  });
+  if (!membership) {
+    const err = new Error("Membership does not exist for this user");
+    err.status = 404;
 
-    return next(err)
+    return next(err);
   }
 
-  if (organizerGroup || userId == user.id){
-    await membership.destroy()
+  if (organizerGroup || userId == user.id) {
+    await membership.destroy();
   } else {
-    const err = new Error('Current user must be host of the group, or user whose membership is being deleted')
-    err.status = 403
+    const err = new Error(
+      "Current user must be host of the group, or user whose membership is being deleted"
+    );
+    err.status = 403;
 
-    return next(err)
+    return next(err);
   }
 
-  res.json({'message': 'Successfully deleted membership from the group'})
-})
+  res.json({ message: "Successfully deleted membership from the group" });
+});
 
 // DELETE A GROUP
-router.delete('/:groupId', requireAuth, async (req, res, next) => {
-  let {user} = req
-  user = user.toJSON()
+router.delete("/:groupId", requireAuth, async (req, res, next) => {
+  let { user } = req;
+  user = user.toJSON();
 
-  const groupId = req.params.groupId
-  let group = await Group.findByPk(groupId)
-  if (!group){
-    const err = new Error("Group couldn't be found")
-    err.status = 404
+  const groupId = req.params.groupId;
+  let group = await Group.findByPk(groupId);
+  if (!group) {
+    const err = new Error("Group couldn't be found");
+    err.status = 404;
 
-    return next(err)
+    return next(err);
   }
 
   let organizerGroup = await Group.findOne({
@@ -877,19 +880,19 @@ router.delete('/:groupId', requireAuth, async (req, res, next) => {
     },
   });
 
-  if (organizerGroup){
-    await group.destroy()
+  if (organizerGroup) {
+    await group.destroy();
   } else {
-    const err = new Error('User must be organizer of the group')
-    err.status = 403
+    const err = new Error("User must be organizer of the group");
+    err.status = 403;
 
-    return next(err)
+    return next(err);
   }
 
   res.json({
-    message: 'Successfully deleted',
-    statusCode: 200
-  })
-})
+    message: "Successfully deleted",
+    statusCode: 200,
+  });
+});
 
 module.exports = router;

@@ -102,17 +102,19 @@ const GroupShow = () => {
             </div>
           </div>
           {authorized && <div className="group-show-button-container">
-             <button onClick={(e) => handleGroupDelete(e, group.id)}>
+             <button className='group-show-button' onClick={(e) => handleGroupDelete(e, group.id)}>
               Delete Group
             </button>
             <div>
               <OpenEditGroupFormModal
+               className='group-show-button'
                 itemText="Edit Group"
                 modalComponent={<EditGroupFormModal group={group} />}
               />
             </div>
             <div>
               <OpenCreateEventModal
+               className='group-show-button'
                 itemText="Create an Event"
                 modalComponent={<CreateEventFormModal group={group} />}
               />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useModal } from '../../context/Modal';
 
-function OpenCreateEventFormModal({
+function OpenModalFooterItem({
   modalComponent, // component to render inside the modal
   itemText, // text of the menu item that opens the modal
   onItemClick, // optional: callback function that will be called once the menu item that opens the modal is clicked
@@ -16,8 +16,8 @@ function OpenCreateEventFormModal({
   };
 
   return (
-    <button onClick={onClick} className='group-show-button'>{itemText}</button>
+    <p onClick={onClick} className='footer-modal-button'>{itemText}</p>
   );
 }
 
-export default OpenCreateEventFormModal;
+export default OpenModalFooterItem;
