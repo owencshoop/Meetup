@@ -16,7 +16,7 @@ function OpenCreateGroupModal({
   };
 
   return (
-    <div className='footer-modal-button' onClick={onClick}>{itemText}</div>
+    <div className='footer-modal-button-create-group' onClick={onClick}>{itemText}</div>
   );
 }
 

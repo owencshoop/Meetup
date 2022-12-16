@@ -29,7 +29,23 @@
     text-align: center;
 }
 
+.footer-modal-button-create-group {
+    color: rgb(246 247 248);
+    font-size: 18px;
+    border: 2px solid rgb(246 247 248);
+    border-radius: 8px;
+    padding: 8px;
+    width: 200px;
+    text-align: center;
+}
+
 .footer-modal-button:hover {
+    cursor: pointer;
+    color: rgb(0, 130, 148);
+    border-color: rgb(0, 130, 148);
+}
+
+.footer-modal-button-create-group:hover {
     cursor: pointer;
     color: rgb(0, 130, 148);
     border-color: rgb(0, 130, 148);
