@@ -29,7 +29,7 @@ const EventShow = () => {
   const endDay = endDate.toLocaleDateString(undefined, options);
   const endTime = endDate.toLocaleTimeString("en-US");
 
-  const authorized = user.id === group.organizerId
+  const authorized = user?.id === group.organizerId
 
   let eventAddress;
   if (event.Venue) {
