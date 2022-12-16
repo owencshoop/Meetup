@@ -1,7 +1,7 @@
 import React from 'react';
 import { useModal } from '../../context/Modal';
 
-function OpenCreateGroupModal({
+function OpenModalFooterItem({
   modalComponent, // component to render inside the modal
   itemText, // text of the menu item that opens the modal
   onItemClick, // optional: callback function that will be called once the menu item that opens the modal is clicked
@@ -16,8 +16,8 @@ function OpenCreateGroupModal({
   };
 
   return (
-    <div className='footer-modal-button' onClick={onClick}>{itemText}</div>
+    <p onClick={onClick} className='footer-modal-button'>{itemText}</p>
   );
 }
 
-export default OpenCreateGroupModal;
+export default OpenModalFooterItem;
