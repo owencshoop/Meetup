@@ -94,7 +94,7 @@ function CreateEventFormModal({ group }) {
             <option value="In person">In person</option>
             <option value="Online">Online</option>
           </select>
-          <label htmlFor="venueId" className="form-input-item-label">Venue:</label>
+          {/* <label htmlFor="venueId" className="form-input-item-label">Venue:</label>
           <select
             className="form-input-item"
             name="venueId"
@@ -111,7 +111,7 @@ function CreateEventFormModal({ group }) {
                 </option>
               );
             })}
-          </select>
+          </select> */}
           <label htmlFor="capacity" className="form-input-item-label">Capacity:</label>
           <input
             className="form-input-item"
